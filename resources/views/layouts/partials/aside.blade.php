@@ -31,10 +31,10 @@
             </li>
 
             <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{route('admin.seller_requests')}}" class="nav-link {{ request()->is('admin/seller_requests') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                Appointments
+                seller requests
                 </p>
             </a>
             </li>
@@ -58,7 +58,7 @@
             </li>
 
             <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{route('logout')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                 Logout

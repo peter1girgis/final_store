@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}">
 
@@ -77,6 +79,13 @@
     <script>
     window.addEventListener('show-form', event => {
         $('#form').modal('show');
+    })
+    window.addEventListener('show-form_requests', event => {
+        $('#form_requests').modal('show');
+    })
+    window.addEventListener('form_requests_hide', event => {
+        $('#form_requests').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
     })
 
     window.addEventListener('show-delete-modal', event => {
