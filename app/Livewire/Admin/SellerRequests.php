@@ -51,6 +51,6 @@ class SellerRequests extends Component
         $requests = seller_requests::with('user')->latest()->paginate();
         return view('livewire.admin.seller-requests',[
             'requests' => $requests ,
-        ])->layout('layouts.app');
+        ])->layout('layouts.admin_layout');
     }
 }

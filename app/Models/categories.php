@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class categories extends Model
 {
     protected $fillable = ['name'];
+    protected $table = 'catagories';
 
     public function stores()
     {

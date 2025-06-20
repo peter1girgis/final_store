@@ -14,7 +14,7 @@ class BladeComponentServicesProvider extends ServiceProvider
      */
     public function register()
     {
-        Blade::component('layouts.app', 'admin-layout');
+        Blade::component('layouts.admin_layout', 'admin-layout');
     }
 
     /**

@@ -90,6 +90,6 @@ class UsersList extends Component
 
         return view('livewire.admin.users.users-list', [
         	'users' => $users,
-        ])->layout('layouts.app');
+        ])->layout('layouts.admin_layout');
     }
 }

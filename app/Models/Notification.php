@@ -15,11 +15,12 @@ class Notification extends Model
         'related_id',
         'related_type',
     ];
+    protected $table = 'notification';
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    
+
 }

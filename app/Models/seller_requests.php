@@ -15,6 +15,7 @@ class seller_requests extends Model
         'status',
         'admin_feedback',
     ];
+    protected $table = 'seller_requests';
 
     public function user()
     {

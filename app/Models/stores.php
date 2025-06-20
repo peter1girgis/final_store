@@ -15,6 +15,7 @@ class stores extends Model
         'address',
         'is_active',
     ];
+    protected $table = 'stores';
 
     public function user()
     {

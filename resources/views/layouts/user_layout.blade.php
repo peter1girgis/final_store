@@ -24,11 +24,11 @@
     <div class="wrapper">
 
     <!-- Navbar -->
-    @include('layouts.partials.navbar')
+    @include('layouts.partials_user.navbar')
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    @include('layouts.partials.aside')
+    @include('layouts.partials_user.aside')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -47,7 +47,7 @@
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    @include('layouts.partials.footer')
+    @include('layouts.partials_user.footer')
     </div>
     <!-- ./wrapper -->
 
@@ -77,25 +77,15 @@
     </script>
 
     <script>
-    window.addEventListener('show-form', event => {
-        $('#form').modal('show');
+    window.addEventListener('show_product', event => {
+        $('#show_product').modal('show');
     })
-    window.addEventListener('show-form_requests', event => {
-        $('#form_requests').modal('show');
-    })
-    window.addEventListener('form_requests_hide', event => {
-        $('#form_requests').modal('hide');
+    window.addEventListener('view_product_hide', event => {
+        $('#show_product').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
 
-    window.addEventListener('show-delete-modal', event => {
-        $('#confirmationModal').modal('show');
-    })
 
-    window.addEventListener('hide-delete-modal', event => {
-        $('#confirmationModal').modal('hide');
-        toastr.success(event.detail.message, 'Success!');
-    })
 
     </script>
 
