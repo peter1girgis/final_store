@@ -36,7 +36,7 @@
             <a href="{{route('admin.seller_requests')}}" class="nav-link {{ request()->is('admin/seller_requests') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                seller requests
+                Become A Seller
                 </p>
             </a>
             </li>

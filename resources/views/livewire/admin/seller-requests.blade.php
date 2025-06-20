@@ -42,67 +42,80 @@
         </div>
         <!-- /.row -->
         </div><!-- /.container-fluid -->
+    <div class="modal fade" id="form_requests" tabindex="-1" role="dialog" aria-labelledby="becomeSellerLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
 
-        <div class="modal fade" id="form_requests" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog" role="document">
+            <div class="card shadow mb-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="becomeSellerLabel">
+                        <i class="fa fa-store mr-1"></i> seller requests
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requestModalLabel">
-                            <i class="fa fa-store mr-1"></i> Seller Request Details
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
+                <form wire:submit.prevent="submitRequest" enctype="multipart/form-data">
                     <div class="modal-body">
-                        {{-- Store Name --}}
-                        <div class="form-group">
-                            <label><strong>Store Name</strong></label>
-                            <input type="text" class="form-control" wire:model.defer="state.store_name"  readonly>
-                        </div>
 
-                        {{-- Store Description --}}
-                        <div class="form-group">
-                            <label><strong>Description</strong></label>
-                            <textarea class="form-control" rows="2" wire:model.defer="state.store_description" readonly></textarea>
-                        </div>
-
-                        {{-- Phone --}}
-                        <div class="form-group">
-                            <label><strong>Phone</strong></label>
-                            <input type="text" class="form-control" wire:model.defer="state.phone"  readonly>
-                        </div>
-
-                        {{-- Address --}}
-                        <div class="form-group">
-                            <label><strong>Address</strong></label>
-                            <input type="text" class="form-control" wire:model.defer="state.address"   readonly>
-                        </div>
-
-                        {{-- Logo --}}
-                        @if (!empty($selectedRequest['store_logo']))
-                            <div class="form-group text-center">
-                                <label><strong>Store Image</strong></label><br>
-                                <img src="{{ asset('storage/' . @$state.store_image )}}" class="img-fluid rounded border shadow-sm" style="max-height: 200px;" alt="Store Image">
+                        <div class="row">
+                            {{-- Store Logo Preview --}}
+                            <div class="col-md-4 mb-3">
+                                @if (@$store_logo)
+                                    <img src="{{ asset('storage/' . $store_logo) }}"
+                                        class="img-fluid rounded border shadow-sm"
+                                        style="max-height: 300px; object-fit: contain;"
+                                        alt="Store Logo Preview">
+                                @else
+                                    <div class="bg-light d-flex align-items-center justify-content-center border"
+                                        style="height: 300px;">
+                                        <span class="text-muted">No Logo</span>
+                                    </div>
+                                @endif
                             </div>
-                        @endif
 
-                        {{-- Status --}}
-                        <div class="form-group">
-                            <label><strong>Status</strong></label>
-                            <input type="text" class="form-control" wire:model.defer="state.status"  readonly>
+                            {{-- Store Info --}}
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label><strong>Store Name</strong></label>
+                                    <input type="text" class="form-control" wire:model.defer="state.store_name" readonly>
+                                    @error('state.store_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Description</strong></label>
+                                    <textarea class="form-control" rows="3" wire:model.defer="state.store_description" readonly></textarea>
+                                    @error('state.store_description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Phone</strong></label>
+                                    <input type="text" class="form-control" wire:model.defer="state.phone" readonly>
+                                    @error('state.phone') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Address</strong></label>
+                                    <input type="text" class="form-control" wire:model.defer="state.address" readonly>
+                                    @error('state.address') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Status</strong></label>
+                                    <input type="text" class="form-control" wire:model.defer="state.status"  readonly>
+                                </div>
+
+                                {{-- Admin Feedback --}}
+                                @if (!empty($state['admin_feedback']))
+                                    <div class="form-group">
+                                        <label><strong>Admin Feedback</strong></label>
+                                        <textarea class="form-control text-danger" wire:model.defer="state.admin_feedback" rows="2" readonly></textarea>
+                                    </div>
+                                @endif
+                            </div>
+                            </div>
                         </div>
 
-                        {{-- Admin Feedback --}}
-                        @if (!empty($selectedRequest['admin_feedback']))
-                            <div class="form-group">
-                                <label><strong>Admin Feedback</strong></label>
-                                <textarea class="form-control text-danger" wire:model.defer="state.admin_feedback" rows="2" readonly></textarea>
-                            </div>
-                        @endif
                     </div>
 
                     <div class="modal-footer">
@@ -118,11 +131,14 @@
                             <i class="fa fa-times-circle mr-1"></i> Reject
                         </button>
                     </div>
-
-                </div>
+                </form>
+            </div>
 
         </div>
     </div>
+</div>
+
+
 
 </div>
 

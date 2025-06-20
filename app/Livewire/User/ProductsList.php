@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Models\Product;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 
@@ -17,6 +18,15 @@ class ProductsList extends Component
 
 		$this->dispatch('show_product');
     }
+
+
+    // #[On('open-seller-request')]
+    // public function openForm()
+    // {
+
+    //     $this->dispatch('show_form_request_seller');
+    // }
+
     public function render()
     {
         $products = Product::latest()->paginate();

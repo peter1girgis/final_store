@@ -28,7 +28,7 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    @include('layouts.partials_user.aside')
+    <livewire:layouts.partials.aside />
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -82,6 +82,13 @@
     })
     window.addEventListener('view_product_hide', event => {
         $('#show_product').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
+    window.addEventListener('open-become-seller', () => {
+        $('#becomeSellerModal').modal('show');
+    });
+    window.addEventListener('hide-open-become-seller', event => {
+        $('#becomeSellerModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
 

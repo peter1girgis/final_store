@@ -47,7 +47,14 @@
                 </p>
             </a>
             </li>
-
+            <li class="nav-item">
+            <a href="" class="nav-link">
+                <i class="nav-icon fa fa-store mr-1"></i></i>
+                <p>
+                Stores
+                </p>
+            </a>
+            </li>
             <li class="nav-item">
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>

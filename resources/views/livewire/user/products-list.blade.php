@@ -17,7 +17,7 @@
     </div>
 
     <!-- Main content -->
-    <div class="row">
+    <div class="row px-3">
         @foreach ($products as $product)
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
@@ -40,7 +40,7 @@
                                 <h5 class="card-title">{{ $product->name }}</h5>
                                 <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
                                 <p class="text-success fw-bold mb-2">{{ $product->price }} EGP</p>
-                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})" >View</a>
+                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})">View</a>
                             </div>
                         </div>
 
@@ -49,6 +49,7 @@
             </div>
         @endforeach
     </div>
+
     <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-xl" role="document"> {{-- أكبر عرض ممكن --}}
         <div class="modal-content">

@@ -15,7 +15,7 @@ class Notification extends Model
         'related_id',
         'related_type',
     ];
-    protected $table = 'notification';
+    protected $table = 'notifications';
 
     public function user()
     {
