@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Seller;
 
+use App\Models\Notification;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,6 +18,29 @@ class AddProduct extends Component
     public function addNewProduct (){
         $this->reset(['state', 'main_image', 'sub_images']);
         $this->dispatch('addProductModal');
+    }
+    public function save_changes (){
+        $this->validate([
+            'state.name' => 'required|string|max:255',
+            'state.description' => 'nullable|string',
+            'state.price' => 'required|numeric',
+            'state.old_price' => 'nullable|numeric',
+            'state.stock' => 'required|integer|min:0',
+        ]);
+        $this->state['store_id'] = 5 ;
+        $product = Product::findOrFail($this->state['id']); // تأكد إن id موجود في $state
+
+        $product->update([
+            'store_id' => $this->state['store_id'],
+            'name' => $this->state['name'],
+            'description' => $this->state['description'],
+            'price' => $this->state['price'],
+            'old_price' => $this->state['old_price'],
+            'stock' => $this->state['stock'],
+        ]);
+
+        $this->reset(['state', 'main_image', 'sub_images']);
+        $this->dispatch('view_product_hide', ['message' => 'Product added successfully!']);
     }
     public function view_item(Product $item){
         $this->state = [];
@@ -58,6 +82,13 @@ class AddProduct extends Component
             'stock' => $this->state['stock'],
             'main_image' => $mainImagePath,
             'sub_images' => $subImagePaths->toJson(),
+        ]);
+        Notification::create([
+            'user_id' => auth()->user()->id,
+            'title' => 'Product Created',
+            'message' => 'Your new product has been successfully added to your store.',
+            'status' => 'unread',
+            'type' => 'general',
         ]);
 
         $this->reset(['state', 'main_image', 'sub_images']);

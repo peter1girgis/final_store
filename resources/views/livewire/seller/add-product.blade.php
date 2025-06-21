@@ -133,26 +133,26 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label><strong>Product Name</strong></label>
-                            <input type="text" class="form-control" wire:model.defer="state.name" readonly>
+                            <input type="text" class="form-control" wire:model.defer="state.name">
                         </div>
 
                         <div class="form-group">
                             <label><strong>Description</strong></label>
-                            <textarea class="form-control" rows="4" wire:model.defer="state.description" readonly></textarea>
+                            <textarea class="form-control" rows="4" wire:model.defer="state.description" ></textarea>
                         </div>
 
                         <div class="form-group row">
                             <div class="col">
                                 <label><strong>Price</strong></label>
-                                <input type="text" class="form-control text-success" wire:model.defer="state.price" readonly>
+                                <input type="text" class="form-control text-success" wire:model.defer="state.price" >
                             </div>
                             <div class="col">
                                 <label><strong>Old Price</strong></label>
-                                <input type="text" class="form-control text-muted" wire:model.defer="state.old_price" readonly>
+                                <input type="text" class="form-control text-muted" wire:model.defer="state.old_price" >
                             </div>
                             <div class="col">
                                 <label><strong>Stock</strong></label>
-                                <input type="number" class="form-control" wire:model.defer="state.stock" readonly>
+                                <input type="number" class="form-control" wire:model.defer="state.stock" >
                             </div>
                         </div>
                     </div>
@@ -179,6 +179,9 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
+                </button>
+                <button type="button" wire:click = "save_changes"  class="btn btn-success">
+                        <i class="fa fa-save mr-1"></i> Save changes
                 </button>
             </div>
 
