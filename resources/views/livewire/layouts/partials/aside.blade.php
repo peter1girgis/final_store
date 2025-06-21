@@ -25,7 +25,7 @@
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('products') ? 'active' : '' }}">
+            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('user/products') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <strong>Product</strong>
             </a>

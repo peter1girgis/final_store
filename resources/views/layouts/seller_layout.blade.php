@@ -95,7 +95,36 @@
 
 
     </script>
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                @if(session('message'))
+                    window.dispatchEvent(new CustomEvent('toast', {
+                        detail: {
+                            type: '{{ session('message')['type'] }}',
+                            text: '{{ session('message')['text'] }}'
+                        }
+                    }));
+                @endif
+            });
+            window.addEventListener('toast', event => {
+                const type = event.detail.type || 'info';
+                const text = event.detail.text || 'No message';
 
+                switch (type) {
+                    case 'success':
+                        toastr.success(text, 'Success!');
+                        break;
+                    case 'error':
+                        toastr.error(text, 'Error!');
+                        break;
+                    case 'warning':
+                        toastr.warning(text, 'Warning!');
+                        break;
+                    default:
+                        toastr.info(text, 'Info');
+                }
+            });
+</script>
     <livewire:scripts />
     </body>
     </html>

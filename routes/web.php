@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
-use App\Livewire\Admin\Users\UsersList;
+use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\SellerRequests;
+use App\Livewire\Admin\Users\UsersList;
 use App\Livewire\Seller\AddProduct;
 use App\Livewire\User\ProductsList;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,32 +19,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('admin/dashboard', DashboardController::class)->name('admin.dashboard');
+    Route::get('admin/seller_requests', SellerRequests::class)->name('admin.seller_requests');
+    Route::get('admin/users', UsersList::class)->name('admin.users');
+});
+
+Route::middleware(['auth', 'is_seller'])->group(function () {
+    Route::get('seller/Add-products',AddProduct::class)->name('addproduct');
+});
+
+Route::middleware(['auth', 'is_user'])->group(function () {
+    Route::get('/user/products', ProductsList::class)->name('user.product');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/dashboard', DashboardController::class)->name('admin.dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('admin/users', UsersList::class)->name('admin.users');
-Route::get('products', ProductsList::class)->name('user.product');
-Route::get('admin/seller_requests', SellerRequests::class)->name('admin.seller_requests');
-
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/login');
-})->middleware('auth')->name('logout');
-
-Route::get('Seller/Add-products',AddProduct::class)->name('addproduct');
-
-
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/register', [AuthController::class, 'registerPost'])->name('register');
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', [HomeController::class, 'index']);
-    Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
-});
+require __DIR__.'/auth.php';
