@@ -113,12 +113,14 @@
                 @if (!empty($state['sub_images']) && is_array($state['sub_images']) && count($state['sub_images']) > 0)
                     <div class="mt-4">
                         <label><strong>Other Images</strong></label>
-                        <div class="d-flex flex-wrap gap-3 overflow-auto">
+                        <div class="d-flex overflow-auto" style="gap: 10px;">
                             @foreach ($state['sub_images'] as $img)
-                                <img src="{{ asset('storage/' . $img) }}"
-                                     class="rounded border"
-                                     style="height: 300px; width: auto; object-fit: contain;"
-                                     alt="Sub Image">
+                                <div class="flex-shrink-0">
+                                    <img src="{{ asset('storage/' . $img) }}"
+                                        class="rounded border"
+                                        style="height: 120px; width: auto; object-fit: contain;"
+                                        alt="Sub Image">
+                                </div>
                             @endforeach
                         </div>
                     </div>

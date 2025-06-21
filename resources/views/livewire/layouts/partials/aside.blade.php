@@ -1,5 +1,5 @@
 <div>
-        <aside class="main-sidebar elevation-2" style="background-color: #ef4c0c; color: rgb(0, 4, 51);">
+        <aside class="main-sidebar elevation-5" style="background-color: #28345c; color: rgb(0, 0, 0);">
 
 
     <!-- Brand Logo -->
@@ -27,45 +27,41 @@
             <li class="nav-item">
             <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('products') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                Products
-                </p>
+                <strong>Product</strong>
             </a>
             </li>
 
             <li class="nav-item">
             <a href="" class="nav-link " wire:click.prevent="show_form_request">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                Become A Seller
-                </p>
+                <strong>Become A Seller</strong>
             </a>
             </li>
 
             <li class="nav-item">
             <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
-                <p>
+                <strong>
                 Users
-                </p>
+                </strong>
             </a>
             </li>
 
             <li class="nav-item">
             <a href="" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
+                <strong>
                 Settings
-                </p>
+                </strong>
             </a>
             </li>
 
             <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
+                <strong>
                 Logout
-                </p>
+                </strong>
             </a>
             </li>
         </ul>

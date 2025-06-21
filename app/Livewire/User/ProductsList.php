@@ -13,6 +13,8 @@ class ProductsList extends Component
     public function view_item(Product $item){
         $this->state = [];
 		$this->state  = $item->toArray();
+        $this->state['sub_images'] = json_decode($item->sub_images, true);
+
 
 		// $this->showEditModal = false;
 
@@ -30,6 +32,7 @@ class ProductsList extends Component
     public function render()
     {
         $products = Product::latest()->paginate();
+
         return view('livewire.user.products-list',
         ['products' => $products ])
         ->layout('layouts.user_layout');

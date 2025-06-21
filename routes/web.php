@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Livewire\Admin\Users\UsersList;
 use App\Livewire\Admin\SellerRequests;
+use App\Livewire\Seller\AddProduct;
 use App\Livewire\User\ProductsList;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,5 @@ Route::get('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->middleware('auth')->name('logout');
+
+Route::get('Seller/Add-products',AddProduct::class)->name('addproduct');
