@@ -25,19 +25,11 @@
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('Seller/Add-products') ? 'active' : '' }}">
+            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <strong>Add Product</strong>
             </a>
             </li>
-
-            <li class="nav-item">
-            <a href="" class="nav-link " wire:click.prevent="show_form_request">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>Become A Seller</strong>
-            </a>
-            </li>
-
             <li class="nav-item">
             <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
@@ -48,10 +40,10 @@
             </li>
 
             <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{route('profile.edit')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <strong>
-                Settings
+                control profile
                 </strong>
             </a>
             </li>

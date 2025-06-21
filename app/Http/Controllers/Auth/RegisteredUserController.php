@@ -46,6 +46,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
-    }
+        if ($user->user_state === 'admin') {
+            return redirect('/admin/dashboard');
+        } elseif ($user->user_state === 'seller') {
+            return redirect('/seller/Add-products');
+        } else {
+            return redirect('/user/products');
+        }
+        }
 }

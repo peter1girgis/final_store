@@ -48,22 +48,50 @@
             </li>
 
             <li class="nav-item">
-            <a href="" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>
-                Settings
-                </strong>
-            </a>
+                <a href="{{route('profile.edit')}}" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <strong>
+                    control profile
+                    </strong>
+                </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <strong>
                 Logout
                 </strong>
             </a>
-            </li>
+            </li> --}}
+            <x-dropdown class="nav-item" align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="btn btn-navbar" type="submit">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <strong>
+                                Go To Sitting
+                            </strong>
+                        </button>
+
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
         </ul>
         </nav>
         <!-- /.sidebar-menu -->
