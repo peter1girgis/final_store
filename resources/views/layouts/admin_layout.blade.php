@@ -24,7 +24,7 @@
     <div class="wrapper">
 
     <!-- Navbar -->
-    @include('layouts.partials_admin.navbar')
+    <livewire:layouts.partials.navbar />
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -111,6 +111,13 @@
         $('#sendNotificationModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('search_model_show', event => {
+        $('#search_model').modal('show');
+    });
+    // window.addEventListener('search_model_hide', event => {
+    //     $('#form_requests').modal('hide');
+    //     toastr.success(event.detail.message, 'Success!');
+    // })
 
     </script>
     <script>

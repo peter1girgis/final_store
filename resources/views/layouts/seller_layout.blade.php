@@ -24,7 +24,8 @@
     <div class="wrapper">
 
     <!-- Navbar -->
-    @include('layouts.partials_seller.navbar')
+    <livewire:layouts.partials.navbar />
+
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -102,6 +103,9 @@
         $('#show_product').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('search_model_show', event => {
+        $('#search_model').modal('show');
+    });
 
 
 
