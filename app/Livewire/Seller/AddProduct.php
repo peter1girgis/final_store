@@ -103,7 +103,7 @@ class AddProduct extends Component
 
     public function render()
     {
-        $products = Product::where('store_id',5)->latest()->paginate(6);
+        $products = Product::where('store_id',auth()->user()->store->id)->latest()->paginate(6);
         return view('livewire.seller.add-product',
         ['products' => $products ])
         ->layout('layouts.seller_layout');

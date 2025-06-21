@@ -78,6 +78,23 @@
         $('#addProductModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('show_store', event => {
+        $('#form_show_store').modal('show');
+    })
+    window.addEventListener('hide_show_store', event => {
+        $('#form_show_store').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
+    window.addEventListener('show-notification-form', event => {
+        $('#sendNotificationModal').modal('show');
+    })
+    window.addEventListener('hide-notification-form', event => {
+        $('#sendNotificationModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
+    window.addEventListener('store_updated', event => {
+        toastr.success(event.detail.message, 'updated successfully!');
+    })
     window.addEventListener('show_product', event => {
         $('#show_product').modal('show');
     })

@@ -12,7 +12,7 @@ class AsidebarNotification extends Component
     {
         $notifications  = Notification::where('user_id', Auth::id())
             ->latest()
-            ->take(5)
+            ->take(7)
             ->get()
             ->toArray();
         return view('livewire.layouts.asidebar-notification',

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Notification;
 use App\Models\seller_requests;
+use App\Models\User;
 use App\Models\stores;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -32,6 +33,8 @@ class SellerRequests extends Component
         if ($store) {
             $store->delete();
         }
+        $user = User::where('id',$request->user_id)->first();
+        $user->update(['user_state' => 'normal']);
 
         Notification::create([
             'user_id' => $request->user_id,
@@ -49,6 +52,9 @@ class SellerRequests extends Component
         $request = seller_requests::findOrFail($this->state['id'])   ;
         $request->update(['status' => 'approved']);
 
+        $user = User::where('id',$request->user_id)->first();
+        $user->update(['user_state' => 'seller']);
+        
         stores::create([
             'user_id' => $request->user_id,
             'store_name' => $request->store_name,

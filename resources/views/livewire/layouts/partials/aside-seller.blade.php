@@ -25,16 +25,24 @@
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
+            <a href="{{ route('addproduct') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <strong>Add Product</strong>
             </a>
             </li>
             <li class="nav-item">
-            <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
+            <a href="{{ route('seller.MyStore') }}" class="nav-link {{ request()->is('seller/MyStore') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
                 <strong>
-                Users
+                My Store
+                </strong>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{ route('seller.stores')}}" class="nav-link {{ request()->is('seller/stores') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-store mr-1"></i></i>
+                <strong>
+                Stores
                 </strong>
             </a>
             </li>
