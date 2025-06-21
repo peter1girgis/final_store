@@ -32,6 +32,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">state</th>
                         <th scope="col">Options</th>
                         </tr>
                     </thead>
@@ -41,6 +42,7 @@
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->user_state }}</td>
                         <td>
                             <a href="" wire:click.prevent="edit({{ $user }})">
                                 <i class="fa fa-edit mr-2"></i>
@@ -114,6 +116,20 @@
             <div class="form-group">
                 <label for="passwordConfirmation">Confirm Password</label>
                 <input type="password" wire:model.defer="state.password_confirmation" class="form-control" id="passwordConfirmation" placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+                <label for="user_state">User Role</label>
+                <select wire:model.defer="state.user_state" id="user_state" class="form-control @error('user_state') is-invalid @enderror">
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="seller">Seller</option>
+                </select>
+                @error('user_state')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
         </div>

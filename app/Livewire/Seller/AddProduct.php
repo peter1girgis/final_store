@@ -6,11 +6,17 @@ use App\Models\Notification;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class AddProduct extends Component
 {
     use WithFileUploads ;
+    use WithPagination ;
 
+
+    protected $paginationTheme = 'bootstrap';
+
+    
     public $main_image, $sub_images = [], $state = [];
      // Collection of all stores
 
@@ -97,7 +103,7 @@ class AddProduct extends Component
 
     public function render()
     {
-        $products = Product::where('store_id',5)->latest()->paginate();
+        $products = Product::where('store_id',5)->latest()->paginate(6);
         return view('livewire.seller.add-product',
         ['products' => $products ])
         ->layout('layouts.seller_layout');

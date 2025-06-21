@@ -32,6 +32,7 @@ class UsersList extends Component
 			'name' => 'required',
 			'email' => 'required|email|unique:users',
 			'password' => 'required|confirmed',
+            'user_state' => 'required',
 		])->validate();
 
 		$validatedData['password'] = Hash::make($validatedData['password']);
@@ -59,6 +60,7 @@ class UsersList extends Component
 			'name' => 'required',
 			'email' => 'required|email|unique:users,email,'.$this->user->id,
 			'password' => 'sometimes|confirmed',
+            'user_state' => 'required',
 		])->validate();
 
 		if(!empty($validatedData['password'])) {

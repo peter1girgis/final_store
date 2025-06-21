@@ -97,6 +97,10 @@
                 </div>
             </div>
         @endforeach
+        <div>
+            {{ $products->links() }} {{-- ✅ --}}
+        </div>
+
     </div>
 
     <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
