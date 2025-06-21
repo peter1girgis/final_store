@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Admin\Seller\Stores;
 use App\Livewire\Admin\SellerRequests;
 use App\Livewire\Admin\Users\UsersList;
 use App\Livewire\Seller\AddProduct;
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('admin/dashboard', DashboardController::class)->name('admin.dashboard');
     Route::get('admin/seller_requests', SellerRequests::class)->name('admin.seller_requests');
     Route::get('admin/users', UsersList::class)->name('admin.users');
+    Route::get('admin/stores', Stores::class)->name('admin.stores');
 });
 
 Route::middleware(['auth', 'is_seller'])->group(function () {

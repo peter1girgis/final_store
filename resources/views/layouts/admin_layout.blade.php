@@ -37,13 +37,14 @@
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    {{-- <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
         <div class="p-3">
         <h5>Title</h5>
         <p>Sidebar content</p>
         </div>
-    </aside>
+    </aside> --}}
+    <livewire:layouts.asidebar-notification />
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
@@ -87,6 +88,13 @@
         $('#form_requests').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('show_store', event => {
+        $('#form_show_store').modal('show');
+    })
+    window.addEventListener('hide_show_store', event => {
+        $('#form_show_store').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
 
     window.addEventListener('show-delete-modal', event => {
         $('#confirmationModal').modal('show');
@@ -94,6 +102,13 @@
 
     window.addEventListener('hide-delete-modal', event => {
         $('#confirmationModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
+    window.addEventListener('show-notification-form', event => {
+        $('#sendNotificationModal').modal('show');
+    })
+    window.addEventListener('hide-notification-form', event => {
+        $('#sendNotificationModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
 

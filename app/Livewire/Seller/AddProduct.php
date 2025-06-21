@@ -16,7 +16,7 @@ class AddProduct extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    
+
     public $main_image, $sub_images = [], $state = [];
      // Collection of all stores
 
@@ -33,7 +33,7 @@ class AddProduct extends Component
             'state.old_price' => 'nullable|numeric',
             'state.stock' => 'required|integer|min:0',
         ]);
-        $this->state['store_id'] = 5 ;
+        $this->state['store_id'] = auth()->user()->store->id ;
         $product = Product::findOrFail($this->state['id']); // تأكد إن id موجود في $state
 
         $product->update([
@@ -72,7 +72,7 @@ class AddProduct extends Component
 
 
 
-        $this->state['store_id'] = 5 ;
+        $this->state['store_id'] =  auth()->user()->store->id  ;
         $mainImagePath = $this->main_image->store('product_images', 'public');
         $subImagePaths = collect($this->sub_images)->map(function ($img) {
             return $img->store('product_sub_images', 'public');

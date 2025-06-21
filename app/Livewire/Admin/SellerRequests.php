@@ -28,6 +28,11 @@ class SellerRequests extends Component
         $request = seller_requests::findOrFail($this->state['id'])   ;
         $request->update(['status' => 'rejected']);
 
+        $store = stores::where('user_id', $request->user_id)->first();
+        if ($store) {
+            $store->delete();
+        }
+
         Notification::create([
             'user_id' => $request->user_id,
             'title' => 'Seller Request Rejected',

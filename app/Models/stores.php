@@ -21,6 +21,11 @@ class stores extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'store_id');
+    }
+
 
     public function categories()
     {

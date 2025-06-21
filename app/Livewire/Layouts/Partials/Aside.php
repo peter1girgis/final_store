@@ -11,7 +11,7 @@ class Aside extends Component
 {
     use WithFileUploads;
 
-        public $store_name, $store_description, $phone, $address, $store_logo;
+        // public $store_name, $store_description, $phone, $address, $store_logo;
         public $state = [];
 
     public function show_form_request (){
@@ -30,7 +30,7 @@ class Aside extends Component
         ];
         $this->validate($rules);
         seller_requests::create([
-            'user_id' => 8 , // أو 1 مؤقتًا
+            'user_id' => auth()->user()->id , // أو 1 مؤقتًا
             'store_name' => $this->state['store_name'],
             'store_description' => $this->state['store_description'],
             'phone' => $this->state['phone'],

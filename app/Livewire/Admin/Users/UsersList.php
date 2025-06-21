@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Admin\Users;
 
+use App\Models\Notification;
+use App\Models\stores;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +14,12 @@ class UsersList extends Component
     public $state = [];
 
 	public $user;
+    public $notificationData = [
+        'user_id' => null,
+        'title' => '',
+        'message' => '',
+        'type' => 'general',
+    ];
 
 	public $showEditModal = false;
 
@@ -71,6 +79,34 @@ class UsersList extends Component
         $this->dispatch('hide-form', ['message' => 'User updated successfully!']);
 
 	}
+    public function send_notification($userId)
+{
+
+    $this->notificationData['user_id'] = $userId;
+    $this->resetErrorBag();
+    $this->dispatch('show-notification-form'); // JS to open modal
+}
+
+    public function submitNotification()
+    {
+        $validated = Validator::make($this->notificationData, [
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'message' => 'nullable|string',
+            'type' => 'required|in:seller_status,order,general',
+        ])->validate();
+
+        Notification::create([
+            'user_id' => $validated['user_id'],
+            'title' => $validated['title'],
+            'message' => $validated['message'],
+            'type' => $validated['type'],
+            'status' => 'unread',
+        ]);
+
+        $this->dispatch('hide-notification-form', ['message' => 'Notification sent successfully']);
+        $this->reset('notificationData');
+    }
 
 	public function confirmUserRemoval($userId)
 	{

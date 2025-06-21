@@ -51,6 +51,9 @@
                             <a href="" wire:click.prevent="confirmUserRemoval({{ $user->id }})">
                                 <i class="fa fa-trash text-danger"></i>
                             </a>
+                            <a href="#" wire:click.prevent="send_notification({{ $user->id }})" class="text-decoration-none ml-2">
+                                    <i class="fa-regular fa-paper-plane fa-lg text-success"></i>
+                                </a>
                         </td>
                         </tr>
                 @endforeach
@@ -146,6 +149,54 @@
         </div>
         </form>
     </div>
+    </div>
+    <div class="modal fade" id="sendNotificationModal" tabindex="-1" role="dialog" aria-labelledby="sendNotificationLabel" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog" role="document">
+            <form wire:submit.prevent="submitNotification">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sendNotificationLabel">
+                            <i class="fa fa-bell mr-1"></i> Send Notification
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        {{-- Hidden --}}
+                        <input type="hidden" wire:model="notificationData.user_id">
+
+                        <div class="form-group">
+                            <label><strong>Title</strong></label>
+                            <input type="text" class="form-control" wire:model.defer="notificationData.title">
+                            @error('notificationData.title') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Message</strong></label>
+                            <textarea class="form-control" wire:model.defer="notificationData.message" rows="4"></textarea>
+                            @error('notificationData.message') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Type</strong></label>
+                            <select class="form-control" wire:model.defer="notificationData.type">
+                                <option value="general">General</option>
+                                <option value="seller_status">Seller Status</option>
+                                <option value="order">Order</option>
+                            </select>
+                            @error('notificationData.type') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane mr-1"></i> Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal -->

@@ -14,7 +14,7 @@
             <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">{{ auth()->user()->name}}</a>
         </div>
         </div>
 
@@ -48,11 +48,19 @@
             </a>
             </li>
             <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.stores')}}" class="nav-link {{ request()->is('admin/stores') ? 'active' : '' }}">
                 <i class="nav-icon fa fa-store mr-1"></i></i>
                 <p>
                 Stores
                 </p>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a href="{{route('profile.edit')}}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <strong>
+                control profile
+                </strong>
             </a>
             </li>
             <li class="nav-item">

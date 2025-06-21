@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+    public function store()
+    {
+        return $this->hasOne(stores::class);
+    }
 }
