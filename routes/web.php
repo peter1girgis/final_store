@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Livewire\Admin\Users\UsersList;
 use App\Livewire\Admin\SellerRequests;
 use App\Livewire\Seller\AddProduct;
@@ -35,3 +37,16 @@ Route::get('/logout', function () {
 })->middleware('auth')->name('logout');
 
 Route::get('Seller/Add-products',AddProduct::class)->name('addproduct');
+
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'registerPost'])->name('register');
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', [HomeController::class, 'index']);
+    Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+});
