@@ -9,6 +9,7 @@ use App\Livewire\Seller\AddProduct;
 use App\Livewire\Seller\MyStore;
 use App\Livewire\Seller\Stores as SellerStores;
 use App\Livewire\User\ProductsList;
+use App\Livewire\User\ShowStores;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'is_seller'])->group(function () {
 
 Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/user/products', ProductsList::class)->name('user.product');
+    Route::get('/user/stores', ShowStores::class)->name('user.stores');
 });
 
 Route::get('/', function () {

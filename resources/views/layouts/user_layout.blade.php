@@ -82,6 +82,20 @@
     window.addEventListener('open-become-seller', () => {
         $('#becomeSellerModal').modal('show');
     });
+    window.addEventListener('show_store', event => {
+        $('#form_show_store').modal('show');
+    })
+    window.addEventListener('hide_show_store', event => {
+        $('#form_show_store').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
+    window.addEventListener('show-notification-form', event => {
+        $('#sendNotificationModal').modal('show');
+    })
+    window.addEventListener('hide-notification-form', event => {
+        $('#sendNotificationModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
     window.addEventListener('hide-open-become-seller', event => {
         $('#becomeSellerModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');

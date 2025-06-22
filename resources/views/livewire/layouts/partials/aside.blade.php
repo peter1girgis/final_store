@@ -39,10 +39,10 @@
             </li>
 
             <li class="nav-item">
-            <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
+            <a href="{{ route('user.stores') }}" class="nav-link {{ request()->is('user/stores') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
                 <strong>
-                Users
+                Stores
                 </strong>
             </a>
             </li>

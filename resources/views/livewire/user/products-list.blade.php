@@ -107,6 +107,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group mt-3">
+                        <label><strong>Categories</strong></label>
+
+                        <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
+                            @if (count($selected_categories) >= 1)
+                                @foreach ($selected_categories as $catId)
+                                    @php
+                                        $catName = collect($all_categories)->firstWhere('id', $catId)?->name;
+                                    @endphp
+                                    <span class="badge badge-info px-3 py-2">
+                                        {{ $catName }}
+                                    </span>
+                                @endforeach
+                            @else
+                                <span style="color: rgb(192, 255, 83)" class="badge badge-info px-3 py-2">
+                                    no categories found related to this item
+                                </span>
+                            @endif
+
+                        </div>
+                    </div>
+
                 </div>
 
                 {{-- Sub Images --}}
@@ -114,11 +136,12 @@
                     <div class="mt-4">
                         <label><strong>Other Images</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 10px;">
+
                             @foreach ($state['sub_images'] as $img)
                                 <div class="flex-shrink-0">
                                     <img src="{{ asset('storage/' . $img) }}"
                                         class="rounded border"
-                                        style="height: 120px; width: auto; object-fit: contain;"
+                                        style="height: 190px; width: auto; object-fit: contain;"
                                         alt="Sub Image">
                                 </div>
                             @endforeach
