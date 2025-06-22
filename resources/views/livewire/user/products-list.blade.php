@@ -151,6 +151,10 @@
             </div>
 
             <div class="modal-footer">
+                <button class="btn btn-sm btn-primary" wire:click="addToCart({{ $product->id }})">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
                 </button>

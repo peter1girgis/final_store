@@ -23,77 +23,52 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-            <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('user/products') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>Product</strong>
-            </a>
-            </li>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            <li class="nav-item">
-            <a href="" class="nav-link " wire:click.prevent="show_form_request">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>Become A Seller</strong>
-            </a>
-            </li>
+                {{-- 🛒 Products --}}
+                <li class="nav-item">
+                    <a href="{{ route('user.product') }}" class="nav-link {{ request()->is('user/products') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-box"></i>
+                        <strong>Products</strong>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-            <a href="{{ route('user.stores') }}" class="nav-link {{ request()->is('user/stores') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
-                <strong>
-                Stores
-                </strong>
-            </a>
-            </li>
+                {{-- 🏪 Become A Seller --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link" wire:click.prevent="show_form_request">
+                        <i class="nav-icon fas fa-store"></i>
+                        <strong>Become A Seller</strong>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="{{route('profile.edit')}}" class="nav-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <strong>
-                    control profile
-                    </strong>
-                </a>
-            </li>
+                {{-- 🏬 Stores --}}
+                <li class="nav-item">
+                    <a href="{{ route('user.stores') }}" class="nav-link {{ request()->is('user/stores') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-store-alt"></i>
+                        <strong>Stores</strong>
+                    </a>
+                </li>
 
-            {{-- <li class="nav-item">
-            <a href="{{route('logout')}}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>
-                Logout
-                </strong>
-            </a>
-            </li> --}}
-            <x-dropdown class="nav-item" align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="btn btn-navbar" type="submit">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <strong>
-                                Go To Sitting
-                            </strong>
-                        </button>
+                {{-- 👤 Profile --}}
+                <li class="nav-item">
+                    <a href="{{ route('profile.edit') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <strong>Control Profile</strong>
+                    </a>
+                </li>
 
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-        </ul>
+                {{-- 🔓 Logout (ممكن تفعله لاحقًا) --}}
+                {{--
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <strong>Logout</strong>
+                    </a>
+                </li>
+                --}}
+            </ul>
         </nav>
+
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
