@@ -11,7 +11,7 @@ class categories extends Model
 
     public function stores()
     {
-        return $this->belongsToMany(stores::class, 'category_store');
+        return $this->belongsToMany(stores::class);
     }
     public function products()
     {

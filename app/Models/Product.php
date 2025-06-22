@@ -29,19 +29,20 @@ class Product extends Model
     {
         return $this->belongsTo(stores::class);
     }
-    public function categories()
-    {
-
-        return $this->belongsToMany(categories::class, 'category_product', 'product_id', 'category_id');
-
-    }
-    // app/Models/Product.php
-
     protected static function booted()
     {
         static::deleting(function ($product) {
             $product->categories()->detach();
         });
     }
+    public function categories()
+    {
+
+        return $this->belongsToMany(categories::class);
+
+    }
+    // app/Models/Product.php
+
+
 
 }
