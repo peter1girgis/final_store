@@ -17,7 +17,7 @@
             <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">{{ auth()->user()->name}}</a>
         </div>
         </div>
 
@@ -49,6 +49,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('user.cart') }}" class="nav-link {{ request()->is('user/Shopping_cart') ? 'active' : '' }}">
+                        <i class="fas fa-cart-plus"></i>
+                        <strong>Shopping Cart</strong>
+                    </a>
+                </li>
+
                 {{-- 👤 Profile --}}
                 <li class="nav-item">
                     <a href="{{ route('profile.edit') }}" class="nav-link">
@@ -58,14 +65,14 @@
                 </li>
 
                 {{-- 🔓 Logout (ممكن تفعله لاحقًا) --}}
-                {{--
+
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link">
+                    <a href="{{ route('payments') }}" class="nav-link {{ request()->is('user/payments') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <strong>Logout</strong>
+                        <strong>Payments</strong>
                     </a>
                 </li>
-                --}}
+
             </ul>
         </nav>
 
@@ -123,6 +130,11 @@
                                     <label><strong>Description</strong></label>
                                     <textarea class="form-control" rows="3" wire:model.defer="state.store_description"></textarea>
                                     @error('state.store_description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>stripe_account_id</strong></label>
+                                    <textarea class="form-control" rows="3" wire:model.defer="state.stripe_account_id"></textarea>
+                                    @error('state.stripe_account_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
 
                                 <div class="form-group">

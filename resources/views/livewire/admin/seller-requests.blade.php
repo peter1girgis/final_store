@@ -96,6 +96,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label><strong>stripe_account_id</strong></label>
+                                    <input type="text" class="form-control" wire:model.defer="state.stripe_account_id" readonly>
+                                    @error('state.stripe_account_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
                                     <label><strong>Address</strong></label>
                                     <input type="text" class="form-control" wire:model.defer="state.address" readonly>
                                     @error('state.address') <span class="text-danger">{{ $message }}</span> @enderror

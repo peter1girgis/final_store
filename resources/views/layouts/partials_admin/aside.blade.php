@@ -20,68 +20,67 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                Dashboard
-                </p>
-            </a>
-            </li>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            <li class="nav-item">
-            <a href="{{route('admin.seller_requests')}}" class="nav-link {{ request()->is('admin/seller_requests') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                seller requests
-                </p>
-            </a>
-            </li>
+                {{-- 📊 Dashboard --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-            <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                Users
-                </p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ route('admin.stores')}}" class="nav-link {{ request()->is('admin/stores') ? 'active' : '' }}">
-                <i class="nav-icon fa fa-store mr-1"></i></i>
-                <p>
-                Stores
-                </p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{route('profile.edit')}}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>
-                control profile
-                </strong>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                Settings
-                </p>
-            </a>
-            </li>
+                {{-- 🧾 Seller Requests --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.seller_requests') }}" class="nav-link {{ request()->is('admin/seller_requests') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-check"></i>
+                        <p>Seller Requests</p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-            <a href="{{route('logout')}}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                Logout
-                </p>
-            </a>
-            </li>
-        </ul>
+                {{-- 👥 Users --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+
+                {{-- 🏬 Stores --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.stores') }}" class="nav-link {{ request()->is('admin/stores') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-store"></i>
+                        <p>Stores</p>
+                    </a>
+                </li>
+
+                {{-- 👤 Profile --}}
+                <li class="nav-item">
+                    <a href="{{ route('profile.edit') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <p>Control Profile</p>
+                    </a>
+                </li>
+
+                {{-- ⚙️ Settings --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>Settings</p>
+                    </a>
+                </li>
+
+                {{-- 🔓 Logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.payments') }}" class="nav-link {{ request()->is('admin/payments') ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <strong>Payments</strong>
+                    </a>
+                </li>
+
+            </ul>
         </nav>
+
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

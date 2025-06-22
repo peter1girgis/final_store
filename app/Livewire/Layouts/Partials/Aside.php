@@ -24,6 +24,7 @@ class Aside extends Component
         $rules = [
             'state.store_name' => 'required|string|max:255',
             'state.store_description' => 'required|string',
+            'state.stripe_account_id' => 'required|string',
             'state.phone' => 'required|numeric',
             'state.address' => 'required|string',
             'state.store_logo' => 'nullable|image|max:2048',
@@ -33,6 +34,7 @@ class Aside extends Component
             'user_id' => auth()->user()->id , // أو 1 مؤقتًا
             'store_name' => $this->state['store_name'],
             'store_description' => $this->state['store_description'],
+            'stripe_account_id' => $this->state['stripe_account_id'],
             'phone' => $this->state['phone'],
             'address' => $this->state['address'],
             'store_logo' => $this->state['store_logo']

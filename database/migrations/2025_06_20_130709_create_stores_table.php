@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('store_name');
             $table->string('store_logo')->nullable();
             $table->text('store_description')->nullable();
+            $table->string('stripe_account_id');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->boolean('is_active')->default(true);

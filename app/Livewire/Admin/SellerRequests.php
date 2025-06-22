@@ -64,6 +64,7 @@ class SellerRequests extends Component
             'user_id' => $request->user_id,
             'store_name' => $request->store_name,
             'store_description' => $request->store_description,
+            'stripe_account_id' => $request->stripe_account_id,
             'store_logo' => $request->store_logo,
             'phone' => $request->phone,
             'address' => $request->address,

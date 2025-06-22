@@ -23,49 +23,51 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-            <a href="{{ route('addproduct') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>Add Product</strong>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ route('seller.MyStore') }}" class="nav-link {{ request()->is('seller/MyStore') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-users"></i>
-                <strong>
-                My Store
-                </strong>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="{{ route('seller.stores')}}" class="nav-link {{ request()->is('seller/stores') ? 'active' : '' }}">
-                <i class="nav-icon fa fa-store mr-1"></i></i>
-                <strong>
-                Stores
-                </strong>
-            </a>
-            </li>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            <li class="nav-item">
-            <a href="{{route('profile.edit')}}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>
-                control profile
-                </strong>
-            </a>
-            </li>
+                {{-- ➕ Add Product --}}
+                <li class="nav-item">
+                    <a href="{{ route('addproduct') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-plus-square"></i>
+                        <strong>Add Product</strong>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-            <a href="{{route('logout')}}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <strong>
-                Logout
-                </strong>
-            </a>
-            </li>
-        </ul>
+                {{-- 🏬 My Store --}}
+                <li class="nav-item">
+                    <a href="{{ route('seller.MyStore') }}" class="nav-link {{ request()->is('seller/MyStore') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-store-alt"></i>
+                        <strong>My Store</strong>
+                    </a>
+                </li>
+
+                {{-- 🏪 All Stores --}}
+                <li class="nav-item">
+                    <a href="{{ route('seller.stores') }}" class="nav-link {{ request()->is('seller/stores') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-store"></i>
+                        <strong>Stores</strong>
+                    </a>
+                </li>
+
+                {{-- 👤 Profile --}}
+                <li class="nav-item">
+                    <a href="{{ route('profile.edit') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <strong>Control Profile</strong>
+                    </a>
+                </li>
+
+                {{-- 🔓 Logout --}}
+                <li class="nav-item">
+                    <a href="{{ route('seller.payments') }}" class="nav-link {{ request()->is('/seller/payments') ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <strong>Payments</strong>
+                    </a>
+                </li>
+
+            </ul>
         </nav>
+
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

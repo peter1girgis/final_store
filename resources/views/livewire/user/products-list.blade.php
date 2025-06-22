@@ -151,7 +151,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-sm btn-primary" wire:click="addToCart({{ $product->id }})">
+                <button class="btn btn-sm btn-primary" wire:click="addToCart({{ @$state['id']}})">
                     <i class="fas fa-cart-plus"></i> Add to Cart
                 </button>
 

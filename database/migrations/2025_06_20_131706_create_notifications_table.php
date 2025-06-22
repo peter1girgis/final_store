@@ -11,14 +11,14 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
+            
             $table->string('title');
             $table->text('message')->nullable();
 
             $table->enum('type', ['seller_status', 'order', 'general'])->default('general');
             $table->enum('status', ['unread', 'read'])->default('unread');
 
-            
+
             $table->timestamps();
         });
     }
