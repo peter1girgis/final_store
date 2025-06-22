@@ -158,6 +158,32 @@
                                 <label><strong>Stock</strong></label>
                                 <input type="number" class="form-control" wire:model.defer="state.stock" >
                             </div>
+                            <div class="form-group mt-3">
+                                    <label><strong>Select Categories</strong></label>
+                                    <select class="form-control" wire:change="addCategory($event.target.value)">
+                                        <option value="">-- Choose Category --</option>
+                                        @foreach ($all_categories as $category)
+                                            @if (!in_array($category->id, $selected_categories))
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+
+                                    {{-- Display selected categories --}}
+                                    <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
+                                        @foreach ($selected_categories as $catId)
+                                            @php
+                                                $catName = $all_categories->firstWhere('id', $catId)?->name;
+                                            @endphp
+                                            <div class="badge badge-primary d-flex align-items-center">
+                                                <span>{{ $catName }}</span>
+                                                <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -255,6 +281,33 @@
                                     <input type="number" class="form-control" wire:model.defer="state.stock">
                                     @error('state.stock') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
+                                <div class="form-group mt-3">
+                                    <label><strong>Select Categories</strong></label>
+                                    <select class="form-control" wire:change="addCategory($event.target.value)">
+                                        <option value="">-- Choose Category --</option>
+                                        @foreach ($all_categories as $category)
+                                            @if (!in_array($category->id, $selected_categories))
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+
+                                    {{-- Display selected categories --}}
+                                    <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
+                                        @foreach ($selected_categories as $catId)
+                                            @php
+                                                $catName = $all_categories->firstWhere('id', $catId)?->name;
+                                            @endphp
+                                            <div class="badge badge-primary d-flex align-items-center">
+                                                <span>{{ $catName }}</span>
+                                                <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
+                                                    &times;
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
                             </div>
 
                             {{-- Store Selector --}}

@@ -31,6 +31,11 @@ class SellerRequests extends Component
 
         $store = stores::where('user_id', $request->user_id)->first();
         if ($store) {
+            // احذف المنتجات واحدة واحدة علشان ينفذ deleting event
+            foreach ($store->products as $product) {
+                $product->delete(); // هنا `detach()` في الـ model هيتنفذ
+            }
+
             $store->delete();
         }
         $user = User::where('id',$request->user_id)->first();
@@ -54,7 +59,7 @@ class SellerRequests extends Component
 
         $user = User::where('id',$request->user_id)->first();
         $user->update(['user_state' => 'seller']);
-        
+
         stores::create([
             'user_id' => $request->user_id,
             'store_name' => $request->store_name,

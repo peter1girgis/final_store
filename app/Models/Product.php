@@ -24,8 +24,24 @@ class Product extends Model
     protected $casts = [
         'sub_images' => 'array',
     ];
+    protected $table = 'products';
     public function store()
     {
         return $this->belongsTo(stores::class);
     }
+    public function categories()
+    {
+
+        return $this->belongsToMany(categories::class, 'category_product', 'product_id', 'category_id');
+
+    }
+    // app/Models/Product.php
+
+    protected static function booted()
+    {
+        static::deleting(function ($product) {
+            $product->categories()->detach();
+        });
+    }
+
 }

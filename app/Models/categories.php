@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class categories extends Model
 {
     protected $fillable = ['name'];
-    protected $table = 'catagories';
+    protected $table = 'categories';
 
     public function stores()
     {
         return $this->belongsToMany(stores::class, 'category_store');
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }

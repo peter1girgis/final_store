@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Seller;
 
+use App\Models\categories;
 use App\Models\Notification;
 use App\Models\Product;
 use Livewire\Component;
@@ -18,6 +19,26 @@ class AddProduct extends Component
 
 
     public $main_image, $sub_images = [], $state = [];
+    public $all_categories = [];
+    public $selected_categories = [];
+
+    public function mount()
+    {
+        $this->all_categories = categories::all();
+    }
+
+    public function addCategory($id)
+    {
+        if (!in_array($id, $this->selected_categories)) {
+            $this->selected_categories[] = $id;
+        }
+    }
+
+    public function removeCategory($id)
+    {
+        $this->selected_categories = array_filter($this->selected_categories, fn($catId) => $catId != $id);
+    }
+
      // Collection of all stores
 
 
@@ -44,6 +65,7 @@ class AddProduct extends Component
             'old_price' => $this->state['old_price'],
             'stock' => $this->state['stock'],
         ]);
+        $product->categories()->sync($this->selected_categories);
 
         $this->reset(['state', 'main_image', 'sub_images']);
         $this->dispatch('view_product_hide', ['message' => 'Product added successfully!']);
@@ -51,6 +73,8 @@ class AddProduct extends Component
     public function view_item(Product $item){
         $this->state = [];
 		$this->state  = $item->toArray();
+
+        $this->selected_categories = $item->categories->pluck('id')->toArray(); // ✅ تحميل التصنيفات المرتبطة
         $this->state['sub_images'] = json_decode($item->sub_images, true);
 
 
@@ -79,7 +103,7 @@ class AddProduct extends Component
         });
 
 
-        Product::create([
+        $product = Product::create([
             'store_id' => $this->state['store_id'] ,
             'name' => $this->state['name'],
             'description' => $this->state['description'],
@@ -89,6 +113,8 @@ class AddProduct extends Component
             'main_image' => $mainImagePath,
             'sub_images' => $subImagePaths->toJson(),
         ]);
+        $product->categories()->sync($this->selected_categories);
+
         Notification::create([
             'user_id' => auth()->user()->id,
             'title' => 'Product Created',
