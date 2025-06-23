@@ -3,7 +3,10 @@
 namespace App\Livewire\Layouts\Partials;
 
 use App\Models\categories;
+use App\Models\Notification;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Navbar extends Component
@@ -11,19 +14,45 @@ class Navbar extends Component
     public $search = '';  // بدل query بـ search
     public $results = [];
     public $selectedCategories = [];
+    public $notificationData = [
+        'user_id' => null,
+        'title' => '',
+        'message' => '',
+        'type' => 'general',
+    ];
+
     public function search_for_products()
     {
         $this->dispatch('search_model_show'); // علشان تظهر المودال
     }
-    // public function updatedSearch()
-    // {
-    //     $this->results = Product::where('name', 'like', '%' . $this->search . '%')
-    //         ->orWhere('description', 'like', '%' . $this->search . '%')
-    //         ->get()
-    //         ->toArray();
+    public function contact()
+    {
 
-    //     $this->dispatch('search_model_show');
-    // }
+    $this->notificationData['user_id'] = User::whereName('admin@gmail.com')->first()?->id;
+    $this->resetErrorBag();
+    $this->dispatch('show-notification_admin-form'); // JS to open modal
+ // علشان تظهر المودال
+    }
+    public function submitAdminNotification()
+    {
+        $validated = Validator::make($this->notificationData, [
+            'title' => 'required|string|max:255',
+            'message' => 'nullable|string',
+            'type' => 'required|in:order,general,payment,alert,warning',
+        ])->validate();
+
+        Notification::create([
+            'user_id' => User::whereName('admin@gmail.com')->first()?->id,
+            'title' => $validated['title'],
+            'message' => $validated['message'],
+            'type' => 'order',
+            'status' => 'unread',
+        ]);
+
+        $this->dispatch('hide-notification_admin-form', ['message' => 'Notification sent successfully']);
+        $this->reset('notificationData');
+    }
+
     public function toggleCategory($categoryId)
 {
     if (in_array($categoryId, $this->selectedCategories)) {

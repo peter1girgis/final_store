@@ -28,7 +28,7 @@
                                     <td>{{ $payment->payment_id }}</td>
                                     <td>{{ $payment->product_names }}</td>
                                     <td>{{ $payment->amount }} {{ strtoupper($payment->currency) }}</td>
-                                    <td>{{ $payment->quantity }}</td>
+                                    <td>{{ $payment->total_quantity }}</td>
                                     <td>{{ ucfirst($payment->payment_method) }}</td>
                                     <td>
                                         <span class="badge badge-{{ $payment->payment_status === 'paid' ? 'success' : 'warning' }}">

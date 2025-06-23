@@ -17,11 +17,17 @@ public function exportToPdf()
         {
             $user = Auth::user();
 
-            if ($user->user_state === 'seller' && $user->store) {
+            if ($user->user_state === 'admin') {
+    // لو أدمن، هيرجع كل المدفوعات بدون فلترة
+                $payments = payment_info::latest()->get();
+            } elseif ($user->user_state === 'seller' && $user->store) {
+                // لو بائع، هيرجع المدفوعات الخاصة بمتجره
                 $payments = payment_info::where('store_id', $user->store->id)->latest()->get();
             } else {
+                // لو مشتري، هيرجع المدفوعات الخاصة به فقط
                 $payments = payment_info::where('user_id', $user->id)->latest()->get();
-            }
+                }
+
 
             $pdf = Pdf::loadView('complex-table', ['payments' => $payments]);
 
@@ -34,12 +40,15 @@ public function exportToPdf()
     {
         $user = Auth::user();
 
-        if ($user->user_state === 'seller' && $user->store) {
-            // عرض المدفوعات الخاصة بالمتجر (البائع)
-            $this->payments = payment_info::where('store_id', $user->store->id)->latest()->get();
-        } else {
-            // عرض المدفوعات الخاصة بالمستخدم (المشتري)
-            $this->payments = payment_info::where('user_id', $user->id)->latest()->get();
+        if ($user->user_state === 'admin') {
+    // لو أدمن، هيرجع كل المدفوعات بدون فلترة
+        $this->payments = payment_info::latest()->get();
+    } elseif ($user->user_state === 'seller' && $user->store) {
+        // لو بائع، هيرجع المدفوعات الخاصة بمتجره
+        $this->payments = payment_info::where('store_id', $user->store->id)->latest()->get();
+    } else {
+        // لو مشتري، هيرجع المدفوعات الخاصة به فقط
+        $this->payments = payment_info::where('user_id', $user->id)->latest()->get();
         }
     }
     public function render()

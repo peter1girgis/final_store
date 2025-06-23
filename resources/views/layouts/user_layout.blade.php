@@ -96,6 +96,13 @@
         $('#sendNotificationModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('show-notification_admin-form', event => {
+        $('#sendadminNotificationModal').modal('show');
+    })
+    window.addEventListener('hide-notification_admin-form', event => {
+        $('#sendadminNotificationModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
     window.addEventListener('hide-open-become-seller', event => {
         $('#becomeSellerModal').modal('hide');
         toastr.success(event.detail.message, 'Success!');
