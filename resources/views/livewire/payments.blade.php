@@ -4,6 +4,9 @@
             <h4 class="mb-0"><i class="fas fa-credit-card mr-2"></i> Payments History</h4>
         </div>
         <div class="card-body p-0">
+
+            <button wire:click="exportToPdf" class="btn btn-lg btn-primary m-1">Download PDF</button>
+
             @if(count($payments) > 0)
                 <div class="table-responsive">
                     <table class="table table-striped mb-0">
@@ -26,7 +29,7 @@
                                     <td>{{ $payment->payment_id }}</td>
                                     <td>{{ $payment->product_names }}</td>
                                     <td>{{ $payment->amount }} {{ strtoupper($payment->currency) }}</td>
-                                    <td>{{ $payment->quantity }}</td>
+                                    <td>{{ $payment->total_quantity }}</td>
                                     <td>{{ ucfirst($payment->payment_method) }}</td>
                                     <td>
                                         <span class="badge badge-{{ $payment->payment_status === 'paid' ? 'success' : 'warning' }}">

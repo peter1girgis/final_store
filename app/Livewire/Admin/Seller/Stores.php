@@ -42,7 +42,7 @@ class Stores extends Component
             'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'message' => 'nullable|string',
-            'type' => 'required|in:seller_status,order,general',
+            'type' => 'required|in:order,general,payment,alert,warning',
         ])->validate();
 
         Notification::create([

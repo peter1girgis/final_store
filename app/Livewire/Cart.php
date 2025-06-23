@@ -12,37 +12,27 @@ class Cart extends Component
     public $cartItems = [];
     public function payWithStripe()
 {
-    $userId = Auth::id(); // أو auth()->id()
-
-    // ✅ عرّف المتغير items قبل استخدامه
+    $userId = Auth::id();
     $items = CartItem::with('product.store')->where('user_id', $userId)->get();
 
-    $groupedItems = $items->groupBy(function ($item) {
-        return $item->product->store->id;
-    });
+    $groupedItems = $items->groupBy(fn($item) => $item->product->store->id);
 
     foreach ($groupedItems as $storeId => $storeItems) {
         $lineItems = [];
-        $totalAmount = 0;
         $store = $storeItems->first()->product->store;
 
         foreach ($storeItems as $item) {
             $unitAmount = $item->product->price * 100;
-            $totalAmount += $unitAmount * $item->quantity;
-
             $lineItems[] = [
                 'price_data' => [
                     'currency' => 'usd',
-                    'product_data' => [
-                        'name' => $item->product->name,
-                    ],
+                    'product_data' => ['name' => $item->product->name],
                     'unit_amount' => $unitAmount,
                 ],
                 'quantity' => $item->quantity,
             ];
         }
 
-        // كود Stripe للإنشاء الجلسة هنا
         $stripe = new StripeClient(config('stripe.stripe_sk'));
 
         $session = $stripe->checkout->sessions->create([
@@ -53,10 +43,16 @@ class Cart extends Component
             'cancel_url' => route('cancel'),
         ]);
 
+        // احفظ مؤقتًا الـ session_id مع user_id و store_id
+        session()->push('stripe_sessions', [
+            'store_id' => $store->id,
+            'session_id' => $session->id
+        ]);
 
-        return redirect()->away($session->url);
+        return redirect()->away($session->url); // خلي دي ترجع أول Session فقط (واحدة واحدة)
     }
 }
+
 
     public function mount()
     {

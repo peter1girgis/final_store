@@ -27,7 +27,7 @@ class MyStore extends Component
             'title' => 'Store updated successfully',
             'message' => 'Congratulations! Your store has been updated successfully.',
             'status' => 'unread',
-            'type' => 'seller_status',
+            'type' => 'general',
         ]);
         $this->dispatch('store_updated', ['message' => 'Request approved successfully!']);
         $this->state = [];

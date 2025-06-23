@@ -3,52 +3,99 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\payments ;
 
 class StripeController extends Controller
 {
     public function success(Request $request)
-{
-    if (isset($request->session_id)) {
+    {
         $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-        $session = $stripe->checkout->sessions->retrieve($request->session_id, ['expand' => ['payment_intent']]);
+        $sessionId = $request->session_id;
 
-        $userId = auth()->id();
-
-        // Get products from cart
-        $items = CartItem::with('product.store')->where('user_id', $userId)->get();
-
-        $totalQuantity = $items->sum('quantity');
-        $totalAmount = $items->sum(function ($item) {
-            return $item->product->price * $item->quantity;
-        });
-
-        $productNames = $items->pluck('product.name')->implode(', ');
-
-        payments::create([
-            'user_id' => $userId,
-            'payment_id' => $session->id,
-            'product_names' => $productNames,
-            'total_quantity' => $totalQuantity,
-            'amount' => $totalAmount,
-            'currency' => $session->currency,
-            'payment_status' => $session->payment_status ?? 'paid',
-            'stripe_store_account_id' => optional($items->first()?->product?->store)->stripe_account_id,
+        $session = $stripe->checkout->sessions->retrieve($sessionId, [
+            'expand' => ['payment_intent']
         ]);
 
-        // Optionally clear cart
-        CartItem::where('user_id', $userId)->delete();
+        $userId = auth()->id();
+        $stripeSessions = session()->get('stripe_sessions', []);
 
-        return redirect()->route('payments');
- // أو صفحة شكرًا
-    }
+        foreach ($stripeSessions as $data) {
+            if ($data['session_id'] === $sessionId) {
+                $storeId = $data['store_id'];
 
-    return redirect()->route('cancel');
-}
-    public function cancel()
-        {
-            return "Payment is canceled.";
+                $items = CartItem::with('product.store')
+                    ->where('user_id', $userId)
+                    ->whereHas('product', fn($q) => $q->where('store_id', $storeId))
+                    ->get();
+
+                if ($items->isEmpty()) {
+                    continue; // لا يوجد عناصر لهذا المتجر
+                }
+
+                $store = $items->first()->product->store;
+                $storeOwner = $store->user ?? null;
+
+                $totalQuantity = $items->sum('quantity');
+                $totalAmount = $items->sum(fn($item) => $item->product->price * $item->quantity);
+                $productNames = $items->pluck('product.name')->implode(', ');
+
+                // حفظ الدفع
+                payments::create([
+                    'user_id' => $userId,
+                    'store_id' => $storeId,
+                    'payment_id' => $session->id,
+                    'product_names' => $productNames,
+                    'total_quantity' => $totalQuantity,
+                    'amount' => $totalAmount,
+                    'currency' => $session->currency,
+                    'payment_status' => $session->payment_status ?? 'paid',
+                    'stripe_store_account_id' => $store->stripe_account_id,
+                ]);
+
+                // إشعار للمشتري
+                Notification::create([
+                    'user_id' => $userId,
+                    'title' => 'Payment Successful',
+                    'message' => "You paid $totalAmount USD for ($productNames).",
+                    'status' => 'unread',
+                    'type' => 'payment',
+                ]);
+
+                // إشعار للبائع
+                if ($storeOwner) {
+                    Notification::create([
+                        'user_id' => $storeOwner->id,
+                        'title' => 'New Order Received',
+                        'message' => "You received $totalAmount USD for ($productNames).",
+                        'status' => 'unread',
+                        'type' => 'order',
+                    ]);
+                }
+
+                // حذف العناصر من السلة الخاصة بهذا المتجر
+                CartItem::where('user_id', $userId)
+                    ->whereIn('id', $items->pluck('id'))
+                    ->delete();
+
+                break;
+            }
         }
 
+        session()->forget('stripe_sessions');
+
+        return redirect()->route('payments')->with('message', [
+            'type' => 'success',
+            'text' => 'payment done successfully.'
+        ]);
+
+    }
+
+    public function cancel()
+    {
+        return "Payment is canceled.";
+    }
 }
+
+

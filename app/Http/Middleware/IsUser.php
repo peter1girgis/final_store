@@ -21,7 +21,7 @@ class IsUser
 
         return redirect()->back()->with('message', [
             'type' => 'error',
-            'text' => 'Only sellers can access this page.'
+            'text' => 'Only seller can access this page.'
         ]);
     }
 }

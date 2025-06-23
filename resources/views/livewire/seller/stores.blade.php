@@ -77,8 +77,9 @@
                             <label><strong>Type</strong></label>
                             <select class="form-control" wire:model.defer="notificationData.type">
                                 <option value="general">General</option>
-                                <option value="seller_status">Seller Status</option>
+                                <option value="alert">alert</option>
                                 <option value="order">Order</option>
+                                <option value="warning">warning</option>
                             </select>
                             @error('notificationData.type') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>

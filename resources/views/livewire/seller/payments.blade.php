@@ -1,9 +1,11 @@
 <div class="container-fluid mt-4">
     <div class="card">
+
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0"><i class="fas fa-credit-card mr-2"></i> Payments History</h4>
         </div>
         <div class="card-body p-0">
+            <button wire:click="exportToPdf" class="btn btn-lg btn-primary m-1">Download PDF</button>
             @if(count($payments) > 0)
                 <div class="table-responsive">
                     <table class="table table-striped mb-0">

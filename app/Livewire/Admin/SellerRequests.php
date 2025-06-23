@@ -46,7 +46,7 @@ class SellerRequests extends Component
             'title' => 'Seller Request Rejected',
             'message' => 'Your request to become a seller has been rejected by the admin.',
             'status' => 'unread',
-            'type' => 'seller_status',
+            'type' => 'alert',
         ]);
 
         $this->dispatch('form_requests_hide', ['message' => 'Request rejected successfully!']);
@@ -75,7 +75,7 @@ class SellerRequests extends Component
             'title' => 'Seller Request Approved',
             'message' => 'Congratulations! Your request to become a seller has been approved.',
             'status' => 'unread',
-            'type' => 'seller_status',
+            'type' => 'general',
         ]);
         $this->dispatch('form_requests_hide', ['message' => 'Request approved successfully!']);
         $this->state = [];
