@@ -21,16 +21,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($payments as $index => $payment)
+                            @foreach(@$payments as $index => $payment)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $payment->payment_id }}</td>
-                                    <td>{{ $payment->product_names }}</td>
-                                    <td>{{ $payment->amount }} {{ strtoupper($payment->currency) }}</td>
-                                    <td>{{ $payment->total_quantity }}</td>
+                                    <td>{{ @$index + 1 }}</td>
+                                    <td>{{ @$payment->payment_id }}</td>
+                                    <td>{{ @$payment->product_names }}</td>
+                                    <td>{{ @$payment->amount }} {{ strtoupper($payment->currency) }}</td>
+                                    <td>{{ @$payment->total_quantity }}</td>
                                     <td>{{ ucfirst($payment->payment_method) }}</td>
                                     <td>
-                                        <span class="badge badge-{{ $payment->payment_status === 'paid' ? 'success' : 'warning' }}">
+                                        <span class="badge badge-{{ @$payment->payment_status === 'paid' ? 'success' : 'warning' }}">
                                             {{ ucfirst($payment->payment_status) }}
                                         </span>
                                     </td>

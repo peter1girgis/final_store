@@ -74,8 +74,8 @@
 
                         <!-- الجزء الخاص بالصورة -->
                         <div class="col-4">
-                            @if($product->main_image)
-                                <img src="{{ asset('storage/' . $product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
+                            @if(@$product->main_image)
+                                <img src="{{ asset('storage/' . @$product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
                             @else
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
                                     No Image
@@ -86,9 +86,9 @@
                         <!-- الجزء الخاص بالمحتوى -->
                         <div class="col-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $product->name }}</h5>
-                                <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
-                                <p class="text-success fw-bold mb-2">{{ $product->price }} EGP</p>
+                                <h5 class="card-title">{{ @$product->name }}</h5>
+                                <p class="card-text">{{ Str::limit(@$product->description, 100) }}</p>
+                                <p class="text-success fw-bold mb-2">{{ @$product->price }} EGP</p>
                                 <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})">View</a>
                             </div>
                         </div>
@@ -120,8 +120,8 @@
                 <div class="row">
                     {{-- Main Image --}}
                     <div class="col-md-4">
-                        @if (!empty($state['main_image']))
-                            <img src="{{ asset('storage/' . $state['main_image']) }}"
+                        @if (!empty(@$state['main_image']))
+                            <img src="{{ asset('storage/' . @$state['main_image']) }}"
                                  class="img-fluid rounded shadow-sm border w-100"
                                  style="max-height: 300px; object-fit: contain;"
                                  alt="Main Image">
@@ -162,21 +162,21 @@
                                     <label><strong>Select Categories</strong></label>
                                     <select class="form-control" wire:change="addCategory($event.target.value)">
                                         <option value="">-- Choose Category --</option>
-                                        @foreach ($all_categories as $category)
-                                            @if (!in_array($category->id, $selected_categories))
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @foreach (@$all_categories as $category)
+                                            @if (!in_array($category->id, @$selected_categories))
+                                                <option value="{{ @$category->id }}">{{ @$category->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
 
                                     {{-- Display selected categories --}}
                                     <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
-                                        @foreach ($selected_categories as $catId)
+                                        @foreach (@$selected_categories as $catId)
                                             @php
-                                                $catName = $all_categories->firstWhere('id', $catId)?->name;
+                                                @$catName = @$all_categories->firstWhere('id', $catId)?->name;
                                             @endphp
                                             <div class="badge badge-primary d-flex align-items-center">
-                                                <span>{{ $catName }}</span>
+                                                <span>{{ @$catName }}</span>
                                                 <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
                                                     &times;
                                                 </button>
@@ -193,9 +193,9 @@
                     <div class="mt-4">
                         <label><strong>Other Images</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 10px;">
-                            @foreach ($state['sub_images'] as $img)
+                            @foreach (@$state['sub_images'] as $img)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/' . $img) }}"
+                                    <img src="{{ asset('storage/' . @$img) }}"
                                         class="rounded border"
                                         style="height: 190px; width: auto; object-fit: contain;"
                                         alt="Sub Image">
@@ -236,8 +236,8 @@
                     <div class="row">
                         {{-- Main Image --}}
                         <div class="col-md-4 mb-3">
-                            @if ($main_image)
-                                <img src="{{ $main_image->temporaryUrl() }}" class="img-fluid rounded border shadow-sm" style="max-height: 300px; object-fit: contain;" alt="Main Image Preview">
+                            @if (@$main_image)
+                                <img src="{{ @$main_image->temporaryUrl() }}" class="img-fluid rounded border shadow-sm" style="max-height: 300px; object-fit: contain;" alt="Main Image Preview">
                             @else
                                 <div class="bg-light d-flex align-items-center justify-content-center border" style="height: 300px;">
                                     <span class="text-muted">No Main Image</span>
@@ -285,21 +285,21 @@
                                     <label><strong>Select Categories</strong></label>
                                     <select class="form-control" wire:change="addCategory($event.target.value)">
                                         <option value="">-- Choose Category --</option>
-                                        @foreach ($all_categories as $category)
-                                            @if (!in_array($category->id, $selected_categories))
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @foreach (@$all_categories as $category)
+                                            @if (!in_array(@$category->id, @$selected_categories))
+                                                <option value="{{ @$category->id }}">{{ @$category->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
 
                                     {{-- Display selected categories --}}
                                     <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
-                                        @foreach ($selected_categories as $catId)
+                                        @foreach (@$selected_categories as $catId)
                                             @php
-                                                $catName = $all_categories->firstWhere('id', $catId)?->name;
+                                                @$catName = @$all_categories->firstWhere('id', $catId)?->name;
                                             @endphp
                                             <div class="badge badge-primary d-flex align-items-center">
-                                                <span>{{ $catName }}</span>
+                                                <span>{{ @$catName }}</span>
                                                 <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
                                                     &times;
                                                 </button>
@@ -322,8 +322,8 @@
 
                         @if ($sub_images)
                             <div class="d-flex flex-wrap gap-2 mt-3">
-                                @foreach ($sub_images as $img)
-                                    <img src="{{ $img->temporaryUrl() }}" class="rounded border" style="height: 100px; object-fit: contain;">
+                                @foreach (@$sub_images as $img)
+                                    <img src="{{ @$img->temporaryUrl() }}" class="rounded border" style="height: 100px; object-fit: contain;">
                                 @endforeach
                             </div>
                         @endif

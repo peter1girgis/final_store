@@ -25,8 +25,8 @@
 
                         <!-- الجزء الخاص بالصورة -->
                         <div class="col-4">
-                            @if($product->main_image)
-                                <img src="{{ asset('storage/' . $product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
+                            @if(@$product->main_image)
+                                <img src="{{ asset('storage/' . @$product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
                             @else
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
                                     No Image
@@ -37,10 +37,10 @@
                         <!-- الجزء الخاص بالمحتوى -->
                         <div class="col-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $product->name }}</h5>
-                                <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
-                                <p class="text-success fw-bold mb-2">{{ $product->price }} EGP</p>
-                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})">View</a>
+                                <h5 class="card-title">{{ @$product->name }}</h5>
+                                <p class="card-text">{{ Str::limit(@$product->description, 100) }}</p>
+                                <p class="text-success fw-bold mb-2">{{ @$product->price }} EGP</p>
+                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
                             </div>
                         </div>
 
@@ -67,8 +67,8 @@
                 <div class="row">
                     {{-- Main Image --}}
                     <div class="col-md-4">
-                        @if (!empty($state['main_image']))
-                            <img src="{{ asset('storage/' . $state['main_image']) }}"
+                        @if (!empty(@$state['main_image']))
+                            <img src="{{ asset('storage/' . @$state['main_image']) }}"
                                  class="img-fluid rounded shadow-sm border w-100"
                                  style="max-height: 300px; object-fit: contain;"
                                  alt="Main Image">
@@ -111,8 +111,8 @@
                         <label><strong>Categories</strong></label>
 
                         <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
-                            @if (count($selected_categories) >= 1)
-                                @foreach ($selected_categories as $catId)
+                            @if (count(@$selected_categories) >= 1)
+                                @foreach (@$selected_categories as $catId)
                                     @php
                                         $catName = collect($all_categories)->firstWhere('id', $catId)?->name;
                                     @endphp
@@ -137,9 +137,9 @@
                         <label><strong>Other Images</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 10px;">
 
-                            @foreach ($state['sub_images'] as $img)
+                            @foreach (@$state['sub_images'] as $img)
                                 <div class="flex-shrink-0">
-                                    <img src="{{ asset('storage/' . $img) }}"
+                                    <img src="{{ asset('storage/' . @$img) }}"
                                         class="rounded border"
                                         style="height: 190px; width: auto; object-fit: contain;"
                                         alt="Sub Image">

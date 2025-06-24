@@ -15,9 +15,13 @@ class Payments extends Component
             $user = Auth::user();
 
             if ($user->user_state === 'seller' && $user->store) {
+            // عرض المدفوعات الخاصة بالمتجر (البائع)
                 $payments = payment_info::where('store_id', $user->store->id)->latest()->get();
-            } else {
+            } elseif($user->user_state === 'normal') {
+                // عرض المدفوعات الخاصة بالمستخدم (المشتري)
                 $payments = payment_info::where('user_id', $user->id)->latest()->get();
+            }else{
+                $payments = payment_info::latest()->get();
             }
 
             $pdf = Pdf::loadView('complex-table', ['payments' => $payments]);
@@ -34,9 +38,11 @@ class Payments extends Component
         if ($user->user_state === 'seller' && $user->store) {
             // عرض المدفوعات الخاصة بالمتجر (البائع)
             $this->payments = payment_info::where('store_id', $user->store->id)->latest()->get();
-        } else {
+        } elseif($user->user_state === 'normal') {
             // عرض المدفوعات الخاصة بالمستخدم (المشتري)
             $this->payments = payment_info::where('user_id', $user->id)->latest()->get();
+        }else{
+            $this->payments = payment_info::latest()->get();
         }
     }
     public function render()

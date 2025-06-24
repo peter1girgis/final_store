@@ -13,8 +13,8 @@
                 <div class="row mb-4">
                     {{-- شعار المتجر --}}
                     <div class="col-md-4 mb-3">
-                        @if (!empty($state['store_logo']))
-                            <img src="{{ asset('storage/' . $state['store_logo']) }}"
+                        @if (!empty(@$state['store_logo']))
+                            <img src="{{ asset('storage/' . @$state['store_logo']) }}"
                                 class="img-fluid rounded border shadow-sm w-100"
                                 style="max-height: 300px; object-fit: contain;"
                                 alt="Store Logo">
@@ -52,7 +52,7 @@
                         <span class="info-box-icon bg-info"><i class="far fa-bookmark"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Products</span>
-                            <span class="info-box-number">{{ $product_count }}</span>
+                            <span class="info-box-number">{{ @$product_count }}</span>
                             <div class="progress">
                             <div class="progress-bar bg-info" style="width: 70%"></div>
                             </div>
@@ -64,23 +64,23 @@
                 </div>
 
                 {{-- منتجات المتجر --}}
-                @if (!empty($store_products) && count($store_products) > 0)
+                @if (!empty(@$store_products) && count(@$store_products) > 0)
                     <div>
                         <label><strong>Store Products</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 15px;">
-                            @foreach ($store_products as $product)
+                            @foreach (@$store_products as $product)
                                 <div class="card flex-shrink-0" style="width: 180px;">
                                     @if ($product['main_image'])
-                                        <img src="{{ asset('storage/' . $product['main_image']) }}" class="card-img-top" style="height: 130px; object-fit: cover;" alt="Product Image">
+                                        <img src="{{ asset('storage/' . @$product['main_image']) }}" class="card-img-top" style="height: 130px; object-fit: cover;" alt="Product Image">
                                     @else
                                         <div class="bg-light d-flex justify-content-center align-items-center" style="height: 130px;">
                                             <span class="text-muted">No Image</span>
                                         </div>
                                     @endif
                                     <div class="card-body p-2">
-                                        <h6 class="card-title mb-1" style="font-size: 14px;">{{ \Illuminate\Support\Str::limit($product['name'], 20) }}</h6>
+                                        <h6 class="card-title mb-1" style="font-size: 14px;">{{ \Illuminate\Support\Str::limit(@$product['name'], 20) }}</h6>
                                         <p class="card-text text-muted" style="font-size: 12px;">
-                                            {{ \Illuminate\Support\Str::limit($product['description'], 40) }}
+                                            {{ \Illuminate\Support\Str::limit(@$product['description'], 40) }}
                                         </p>
                                         <p class="text-success fw-bold mb-0" style="font-size: 13px;">
                                             {{ $product['price'] }} EGP

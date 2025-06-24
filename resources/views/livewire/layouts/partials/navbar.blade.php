@@ -6,7 +6,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-        
+
         </li>
         <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link" wire:click="contact">Contact</a>
@@ -55,14 +55,14 @@
                 <div class="mb-3">
                     <label class="mb-2 font-weight-bold">Filter by Category:</label>
                     <div class="d-flex flex-wrap gap-2">
-                        @foreach($categories as $category)
+                        @foreach(@$categories as $category)
                             <input type="checkbox" class="btn-check"
-                                id="cat-{{ $category->id }}"
-                                wire:click="toggleCategory({{ $category->id }})"
-                                @if(in_array($category->id, $selectedCategories)) checked @endif
+                                id="cat-{{ @$category->id }}"
+                                wire:click="toggleCategory({{ @$category->id }})"
+                                @if(in_array(@$category->id, @$selectedCategories)) checked @endif
                                 autocomplete="off">
-                            <label class="btn btn-outline-primary btn-sm" for="cat-{{ $category->id }}">
-                                {{ $category->name }}
+                            <label class="btn btn-outline-primary btn-sm" for="cat-{{ @$category->id }}">
+                                {{ @$category->name }}
                             </label>
                         @endforeach
                     </div>
@@ -70,16 +70,16 @@
             </div>
 
 
-            @if(!empty($results))
+            @if(!empty(@$results))
                 <div class="row">
-                    @foreach($results as $product)
+                    @foreach(@$results as $product)
                         <div class="col-md-12 mb-4">
                             <div class="card shadow p-3">
                                 <div class="row no-gutters align-items-center">
 
                                     {{-- ✅ Left: Main Product Image (2/3 width) --}}
                                     <div class="col-md-6 pr-3">
-                                        <img src="{{ asset('storage/' . $product['main_image']) }}"
+                                        <img src="{{ asset('storage/' . @$product['main_image']) }}"
                                             class="img-fluid w-100 rounded border shadow-sm"
                                             style="height: 350px; object-fit: contain;" alt="Main Image">
                                     </div>
@@ -88,35 +88,35 @@
                                     <div class="col-md-6">
                                         <div class="card-body">
 
-                                            <h3 class="card-title mb-2"> <strong  style=" color: rgb(0, 4, 111);">Name : </strong> {{ $product['name'] }}</h3>
+                                            <h3 class="card-title mb-2"> <strong  style=" color: rgb(0, 4, 111);">Name : </strong> {{ @$product['name'] }}</h3>
 
                                             <p class="card-text text-muted mb-2" style="max-height: 150px; overflow-y: auto;">
                                                 <strong style=" color: rgb(0, 4, 111);">description : </strong>
-                                                {{ $product['description'] }}
+                                                {{ @$product['description'] }}
                                             </p>
 
                                             <p class="card-text text-success font-weight-bold">
                                                 <strong  style=" color: rgb(0, 4, 111);">price : </strong>
-                                                {{ $product['price'] }} EGP
+                                                {{@$product['price'] }} EGP
                                             </p>
 
                                             @if($product['old_price'])
                                                 <p class="card-text text-muted">
                                                     <strong  style=" color: rgb(0, 4, 111);">old_price : </strong>
-                                                    <del>{{ $product['old_price'] }} EGP</del>
+                                                    <del>{{ @$product['old_price'] }} EGP</del>
                                                 </p>
                                             @endif
 
-                                            <p class="card-text mb-2"><strong  style=" color: rgb(0, 4, 111);">stock : </strong> {{ $product['stock'] }}</p>
+                                            <p class="card-text mb-2"><strong  style=" color: rgb(0, 4, 111);">stock : </strong> {{ @$product['stock'] }}</p>
 
                                             {{-- ✅ Sub Images as thumbnails with hover zoom --}}
-                                            @if($product['sub_images'])
+                                            @if(@$product['sub_images'])
                                                 <label class="d-block mt-6"><strong  style=" color: rgb(0, 4, 111);">Other Images</strong></label>
 
                                                 <div class="w-100 d-flex overflow-auto border rounded bg-white px-3 py-2" style="gap: 16px;">
-                                                    @foreach(json_decode($product['sub_images'], true) as $sub)
+                                                    @foreach(json_decode(@$product['sub_images'], true) as $sub)
                                                         <div class="flex-shrink-0">
-                                                            <img src="{{ asset('storage/' . $sub) }}"
+                                                            <img src="{{ asset('storage/' . @$sub) }}"
                                                                 class="border rounded shadow-sm"
                                                                 style="height: 220px; object-fit: contain; transition: transform 0.2s;"
                                                                 onmouseover="this.style.transform='scale(1.4)'"

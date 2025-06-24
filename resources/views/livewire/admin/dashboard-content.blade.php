@@ -7,7 +7,7 @@
                     <span class="info-box-icon"><i class="far fa-flag"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Stores </span>
-                        <span class="info-box-number">{{ $storesCount }}</span>
+                        <span class="info-box-number">{{ @$storesCount }}</span>
                     </div>
                     </div>
             </div>
@@ -17,7 +17,7 @@
                     <span class="info-box-icon"><i class="far fa-copy"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Seller rquests pending</span>
-                        <span class="info-box-number">{{ $pendingSellerRequestsCount }}</span>
+                        <span class="info-box-number">{{ @$pendingSellerRequestsCount }}</span>
                     </div>
                     </div>
             </div><!-- /.card -->
@@ -28,7 +28,7 @@
 
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ $paymentsCount }}</h3>
+                        <h3>{{ @$paymentsCount }}</h3>
                         <p>payments count</p>
                     </div>
                     <div class="icon">

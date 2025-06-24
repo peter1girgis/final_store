@@ -37,12 +37,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                @foreach($users as $user)
+                @foreach(@$users as $user)
                         <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->user_state }}</td>
+                        <th scope="row">{{ @$loop->iteration }}</th>
+                        <td>{{ @$user->name }}</td>
+                        <td>{{ @$user->email }}</td>
+                        <td>{{ @$user->user_state }}</td>
                         <td>
                             <a href="" wire:click.prevent="edit({{ $user }})">
                                 <i class="fa fa-edit mr-2"></i>
@@ -75,7 +75,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-            @if($showEditModal)
+            @if(@$showEditModal)
                 <span>Edit User</span>
             @else
                 <span>Add New User</span>
@@ -139,7 +139,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
             <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
-            @if($showEditModal)
+            @if(@$showEditModal)
                 <span>Save Changes</span>
             @else
                 <span>Save</span>

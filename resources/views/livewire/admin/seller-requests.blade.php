@@ -6,7 +6,7 @@
     <div class="content">
         <div class="container-fluid">
         <div class="row">
-            @foreach($requests as $request)
+            @foreach(@$requests as $request)
                 <div class="col-lg-9">
 
                     <div class="card card-primary card-outline">
@@ -15,10 +15,10 @@
     {{-- Left Side: Store Name & Email --}}
                             <div class="d-flex flex-column">
                                 <h5 class="card-title mb-2">
-                                    <strong>Store Name: </strong> {{ $request->store_name }}
+                                    <strong>Store Name: </strong> {{ @$request->store_name }}
                                 </h5>
                                 <p class="card-text mb-0">
-                                    <strong>User Email: </strong> {{ $request->user->email }}
+                                    <strong>User Email: </strong> {{ @$request->user->email }}
                                 </p>
                             </div>
 
@@ -26,9 +26,9 @@
                             <div class="d-flex flex-column align-items-end text-end">
                                 <p class="card-text mb-2">
                                     <strong>Status: </strong>
-                                    <span class="badge bg-warning text-dark">{{ $request->status }}</span>
+                                    <span class="badge bg-warning text-dark">{{ @$request->status }}</span>
                                 </p>
-                                <a href="" wire:click.prevent="show_request({{ $request->id }})" class="text-decoration-none">
+                                <a href="" wire:click.prevent="show_request({{ @$request->id }})" class="text-decoration-none">
                                     <i class="fa-solid fa-eye fa-lg text-primary"></i>
                                 </a>
                             </div>
@@ -63,7 +63,7 @@
                             {{-- Store Logo Preview --}}
                             <div class="col-md-4 mb-3">
                                 @if (@$store_logo)
-                                    <img src="{{ asset('storage/' . $store_logo) }}"
+                                    <img src="{{ asset('storage/' . @$store_logo) }}"
                                         class="img-fluid rounded border shadow-sm"
                                         style="max-height: 300px; object-fit: contain;"
                                         alt="Store Logo Preview">
