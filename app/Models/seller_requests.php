@@ -10,6 +10,7 @@ class seller_requests extends Model
         'store_name',
         'store_logo',
         'store_description',
+        'stripe_account_id',
         'phone',
         'address',
         'status',

@@ -123,7 +123,7 @@ class AddProduct extends Component
             'type' => 'general',
         ]);
 
-        $this->reset(['state', 'main_image', 'sub_images']);
+        $this->reset(['state', 'main_image', 'sub_images','selected_categories']);
         $this->dispatch('hide-add-product-modal', ['message' => 'Product added successfully!']);
     }
 
