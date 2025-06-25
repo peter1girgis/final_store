@@ -74,12 +74,19 @@
         $('#form').modal('hide');
         toastr.success(event.detail.message, 'Success!');
         })
+        window.addEventListener('hideCategory-form', event => {
+        $('#formCategory').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+        })
     });
     </script>
 
     <script>
     window.addEventListener('show-form', event => {
         $('#form').modal('show');
+    })
+    window.addEventListener('showCategory-form', event => {
+        $('#formCategory').modal('show');
     })
     window.addEventListener('show-form_requests', event => {
         $('#form_requests').modal('show');
@@ -103,6 +110,14 @@
         toastr.success(event.detail.message, 'Success!');
     })
 
+
+    window.addEventListener('show-deleteCategory-modal', event => {
+        $('#deleteConfirmModal').modal('show');
+    })
+    window.addEventListener('hide-deleteCategory-modal', event => {
+        $('#deleteConfirmModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
     window.addEventListener('show-delete-modal', event => {
         $('#confirmationModal').modal('show');
     })

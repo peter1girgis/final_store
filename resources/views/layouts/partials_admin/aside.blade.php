@@ -62,6 +62,12 @@
                         <strong>Payments</strong>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.categories') }}" class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <strong>Categories</strong>
+                    </a>
+                </li>
 
                 {{-- ⚙️ Settings --}}
                 <li class="nav-item">

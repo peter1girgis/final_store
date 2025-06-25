@@ -25,6 +25,21 @@ class Product extends Model
         'sub_images' => 'array',
     ];
     protected $table = 'products';
+    public function evaluations()
+    {
+        return $this->hasMany(evaluations::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(comments::class);
+    }
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+
     public function store()
     {
         return $this->belongsTo(stores::class);

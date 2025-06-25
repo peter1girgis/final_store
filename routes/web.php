@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
+use App\Livewire\User\WishlistProducts;
+use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Payments as AdminPayments;
 use App\Livewire\Admin\Seller\Stores;
 use App\Livewire\Admin\SellerRequests;
@@ -14,6 +16,7 @@ use App\Livewire\Seller\MyStore;
 use App\Livewire\Seller\Payments as SellerPayments;
 use App\Livewire\Seller\Stores as SellerStores;
 use App\Livewire\User\ProductsList;
+use App\Livewire\User\ShowProduct;
 use App\Livewire\User\ShowStores;
 use App\Models\payments;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +37,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('admin/seller_requests', SellerRequests::class)->name('admin.seller_requests');
     Route::get('/admin/payments', AdminPayments::class)->name('admin.payments');
     Route::get('admin/users', UsersList::class)->name('admin.users');
+    Route::get('admin/categories', Categories::class)->name('admin.categories');
     Route::get('admin/stores', Stores::class)->name('admin.stores');
 });
 
@@ -50,6 +54,8 @@ Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/user/pay/success', [StripeController::class, 'success'])->name('success');
     Route::get('/user/pay/cancel', [StripeController::class, 'cancel'])->name('cancel');
     Route::get('/user/payments', LivewirePayments::class)->name('payments');
+    Route::get('/product/{id}', ShowProduct::class)->name('product.show');
+    Route::get('/user/WishList', WishlistProducts::class)->name('user.wishlist');
     Route::get('user/Shopping_cart', Cart::class)->name('user.cart')->middleware('auth');
 });
 

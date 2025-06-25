@@ -31,7 +31,7 @@
             <h4>Total: <strong>{{ $this->total }} EGP</strong></h4>
 
             {{-- ✅ زر الدفع --}}
-            <button wire:click="payWithStripe" class="btn btn-lg btn-primary">
+            <button wire:click="payWithStripe" class="btn btn-lg btn-outline-primary">
                 <i class="fas fa-credit-card mr-2"></i> Checkout & Pay
             </button>
         </div>

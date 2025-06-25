@@ -40,7 +40,7 @@
                                 <h5 class="card-title">{{ @$product->name }}</h5>
                                 <p class="card-text">{{ Str::limit(@$product->description, 100) }}</p>
                                 <p class="text-success fw-bold mb-2">{{ @$product->price }} EGP</p>
-                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
                             </div>
                         </div>
 
@@ -151,11 +151,18 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-sm btn-primary" wire:click="addToCart({{ @$state['id']}})">
+                <button class="btn btn-sm btn-outline-primary" wire:click="addToCart({{ @$state['id']}})">
                     <i class="fas fa-cart-plus"></i> Add to Cart
                 </button>
+                @if (!empty($state['id']))
+                    <a href="{{ route('product.show', $state['id']) }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-eye"></i> More Details
+                    </a>
+                @endif
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+
+
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
                 </button>
             </div>

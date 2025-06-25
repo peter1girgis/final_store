@@ -79,6 +79,9 @@
         $('#show_product').modal('hide');
         toastr.success(event.detail.message, 'Success!');
     })
+    window.addEventListener('return_success', event => {
+        toastr.success(event.detail.message, 'operation completed successfuly!');
+    })
     window.addEventListener('open-become-seller', () => {
         $('#becomeSellerModal').modal('show');
     });

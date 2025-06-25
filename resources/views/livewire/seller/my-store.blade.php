@@ -94,10 +94,10 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
                 </button>
-                <button type="button" wire:click = "save_changes"  class="btn btn-success">
+                <button type="button" wire:click = "save_changes"  class="btn btn-outline-success">
                         <i class="fa fa-save mr-1"></i> Save changes
                 </button>
             </div>

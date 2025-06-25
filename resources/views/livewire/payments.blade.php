@@ -5,7 +5,7 @@
         </div>
         <div class="card-body p-0">
 
-            <button wire:click="exportToPdf" class="btn btn-lg btn-primary m-1">Download PDF</button>
+            <button wire:click="exportToPdf" class="btn btn-lg btn-outline-primary m-1">Download PDF</button>
 
             @if(count($payments) > 0)
                 <div class="table-responsive">
