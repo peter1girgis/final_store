@@ -22,29 +22,51 @@ class ProductsList extends Component
 
     protected $paginationTheme = 'bootstrap';
     public function addToCart()
-    {
-        $userId = Auth::id();
+{
+    $userId = Auth::id();
 
-        if (!$userId) {
-            session()->flash('message', ['type' => 'warning', 'text' => 'Please log in to add products to cart']);
+    if (!$userId) {
+        session()->flash('message', ['type' => 'warning', 'text' => 'Please log in to add products to cart']);
+        return;
+    }
+
+    // تحميل المنتج الحالي باستخدام الـ ID
+    $product = Product::find($this->state['id']);
+
+    if (!$product) {
+        $this->dispatch('return_operation_stopped');
+        return;
+    }
+
+    $item = CartItem::where('user_id', $userId)
+                    ->where('product_id', $product->id)
+                    ->first();
+
+    if ($item) {
+        // التحقق إذا كانت الكمية الجديدة لا تتجاوز المخزون
+        if ($item->quantity + 1 > $product->stock) {
+            $this->dispatch('return_operation_stopped');
             return;
         }
 
-        $item = CartItem::where('user_id', $userId)
-                        ->where('product_id', $this->state['id'])
-                        ->first();
-
-        if ($item) {
-            $item->increment('quantity');
-        } else {
-            CartItem::create([
-                'user_id' => $userId,
-                'product_id' => $this->state['id'],
-                'quantity' => 1,
-            ]);
+        $item->increment('quantity');
+    } else {
+        // التحقق إذا كان هناك مخزون كافي قبل الإضافة
+        if ($product->stock < 1) {
+            $this->dispatch('return_operation_stopped');
+            return;
         }
-        session()->flash('message', ['type' => 'success', 'text' => 'Product added to cart']);
+
+        CartItem::create([
+            'user_id' => $userId,
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
     }
+
+    $this->dispatch('return_success');
+}
+
 
     public function view_item(Product $item){
         $this->state = [];

@@ -22,17 +22,24 @@
             <div id="categoryScroll" class="d-flex gap-3 px-5"
                 style="overflow-x: auto; scroll-behavior: smooth; white-space: nowrap;">
                 @foreach ($categories as $cat)
-                    <div class="card text-center px-3 py-2" style="min-width: 170px; cursor: pointer;">
+                    <div wire:click="toggleCategory({{ $cat->id }})"
+                        class="card text-center px-3 py-2 {{ in_array($cat->id, $selectedCategories) ? 'bg-success text-white border-success' : '' }}"
+                        style="min-width: 170px; cursor: pointer; transition: 0.3s;">
+
                         <img src="{{ $cat->image ? asset('storage/' . $cat->image) : '' }}"
-                            class="card-img-top rounded-circle border"
+                            class="card-img-top rounded-circle border mb-2"
                             style="height: 80px; width: 80px; object-fit: cover;" alt="{{ $cat->name }}">
+
                         <div class="card-body p-1">
-                            <small class="text-muted">{{ $cat->name }}</small>
+                            <small class="{{ in_array($cat->id, $selectedCategories) ? 'text-white fw-bold' : 'text-muted' }}">
+                                {{ $cat->name }}
+                            </small>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+
 
         {{-- Products --}}
         @foreach ($products as $product)
@@ -41,7 +48,7 @@
                     <div class="row no-gutters">
                         <div class="col-4">
                             @if($product->main_image)
-                                <img src="{{ asset('storage/' . $product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
+                                <img src="{{ asset('storage/' . $product->main_image) }}" class="card-img  h-100" alt="{{ $product->name }}">
                             @else
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
                                     No Image
@@ -107,4 +114,124 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal-dialog modal-xl" role="document"> {{-- أكبر عرض ممكن --}}
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">
+                    <i class="fa fa-box mr-1"></i> Product Details
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    {{-- Main Image --}}
+                    <div class="col-md-4">
+                        @if (!empty(@$state['main_image']))
+                            <img src="{{ asset('storage/' . @$state['main_image']) }}"
+                                 class="img-fluid rounded shadow-sm border w-100"
+                                 style="max-height: 300px; object-fit: contain;"
+                                 alt="Main Image">
+                        @else
+                            <div class="bg-light d-flex align-items-center justify-content-center border"
+                                 style="height: 300px;">
+                                <span class="text-muted">No Image</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Product Info --}}
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label><strong>Product Name</strong></label>
+                            <input type="text" class="form-control" wire:model.defer="state.name" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Description</strong></label>
+                            <textarea class="form-control" rows="4" wire:model.defer="state.description" readonly></textarea>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col">
+                                <label><strong>Price</strong></label>
+                                <input type="text" class="form-control text-success" wire:model.defer="state.price" readonly>
+                            </div>
+                            <div class="col">
+                                <label><strong>Old Price</strong></label>
+                                <input type="text" class="form-control text-muted" wire:model.defer="state.old_price" readonly>
+                            </div>
+                            <div class="col">
+                                <label><strong>Stock</strong></label>
+                                <input type="number" class="form-control" wire:model.defer="state.stock" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label><strong>Categories</strong></label>
+
+                        <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
+                            @if (count(@$selected_categories) >= 1)
+                                @foreach (@$selected_categories as $catId)
+                                    @php
+                                        $catName = collect($all_categories)->firstWhere('id', $catId)?->name;
+                                    @endphp
+                                    <span class="badge badge-info px-3 py-2">
+                                        {{ $catName }}
+                                    </span>
+                                @endforeach
+                            @else
+                                <span style="color: rgb(192, 255, 83)" class="badge badge-info px-3 py-2">
+                                    no categories found related to this item
+                                </span>
+                            @endif
+
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- Sub Images --}}
+                @if (!empty($state['sub_images']) && is_array($state['sub_images']) && count($state['sub_images']) > 0)
+                    <div class="mt-4">
+                        <label><strong>Other Images</strong></label>
+                        <div class="d-flex overflow-auto" style="gap: 10px;">
+
+                            @foreach (@$state['sub_images'] as $img)
+                                <div class="flex-shrink-0">
+                                    <img src="{{ asset('storage/' . @$img) }}"
+                                        class="rounded border"
+                                        style="height: 190px; width: auto; object-fit: contain;"
+                                        alt="Sub Image">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-outline-primary" wire:click="addToCart({{ @$state['id']}})">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+                @if (!empty($state['id']))
+                    <a href="{{ route('product.show', $state['id']) }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-eye"></i> More Details
+                    </a>
+                @endif
+
+
+
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                    <i class="fa fa-times mr-1"></i> Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </div>

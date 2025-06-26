@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-xl-1 g-4">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-xl-2 g-4">
         @foreach($mainCategories as $mainCategory)
             <div class="col">
                 <div class="card text-bg-dark h-100 position-relative overflow-hidden border-0 rounded-5">

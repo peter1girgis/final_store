@@ -124,6 +124,9 @@
     window.addEventListener('return_success', event => {
         toastr.success(event.detail.message, 'operation completed successfuly!');
     })
+    window.addEventListener('return_operation_stopped', event => {
+        toastr.warning(event.detail.message, 'sorry operation stopped!');
+    })
     window.addEventListener('open-become-seller', () => {
         $('#becomeSellerModal').modal('show');
     });

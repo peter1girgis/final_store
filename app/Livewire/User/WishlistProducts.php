@@ -48,20 +48,51 @@ class WishlistProducts extends Component
         $this->dispatch('return_success');
     }
 
-    public function addToCart($productId)
-    {
-        CartItem::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'product_id' => $productId,
-            ],
-            [
-                'quantity' => \DB::raw('quantity + 1'),
-            ]
-        );
+    public function addToCart()
+{
+    $userId = Auth::id();
 
-        $this->dispatch('return_success');
+    if (!$userId) {
+        session()->flash('message', ['type' => 'warning', 'text' => 'Please log in to add products to cart']);
+        return;
     }
+
+    // تحميل المنتج الحالي باستخدام الـ ID
+    $product = Product::find($this->state['id']);
+
+    if (!$product) {
+        $this->dispatch('return_operation_stopped');
+        return;
+    }
+
+    $item = CartItem::where('user_id', $userId)
+                    ->where('product_id', $product->id)
+                    ->first();
+
+    if ($item) {
+        // التحقق إذا كانت الكمية الجديدة لا تتجاوز المخزون
+        if ($item->quantity + 1 > $product->stock) {
+            $this->dispatch('return_operation_stopped');
+            return;
+        }
+
+        $item->increment('quantity');
+    } else {
+        // التحقق إذا كان هناك مخزون كافي قبل الإضافة
+        if ($product->stock < 1) {
+            $this->dispatch('return_operation_stopped');
+            return;
+        }
+
+        CartItem::create([
+            'user_id' => $userId,
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+    }
+
+    $this->dispatch('return_success');
+}
 
     public function render()
     {

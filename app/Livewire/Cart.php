@@ -94,11 +94,30 @@ class Cart extends Component
     }
 
     public function incrementQuantity($itemId)
-    {
-        $item = CartItem::find($itemId);
-        $item->increment('quantity');
-        $this->refreshCart();
+{
+    $item = CartItem::find($itemId);
+
+    if (!$item) {
+        return;
     }
+
+    $product = $item->product;
+
+    if (!$product) {
+        return;
+    }
+
+    // التحقق إذا كانت الكمية الجديدة لا تتجاوز المخزون
+    if ($item->quantity + 1 > $product->stock) {
+        $this->dispatch('return_operation_stopped');
+        return;
+    }
+
+    $item->increment('quantity');
+
+    $this->refreshCart();
+}
+
 
     public function decrementQuantity($itemId)
     {

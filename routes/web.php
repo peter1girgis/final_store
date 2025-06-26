@@ -42,6 +42,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('admin/users', UsersList::class)->name('admin.users');
     Route::get('admin/categories', Categories::class)->name('admin.categories');
     Route::get('admin/stores', Stores::class)->name('admin.stores');
+    Route::get('/admin/mainCategories', AdminMainCategories::class)->name('admin.mainCategories');
 });
 
 Route::middleware(['auth', 'is_seller'])->group(function () {
@@ -80,6 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/admin/mainCategories', AdminMainCategories::class)->name('admin.mainCategories');
+
 
 require __DIR__.'/auth.php';

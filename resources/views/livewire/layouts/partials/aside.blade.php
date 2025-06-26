@@ -26,57 +26,70 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 {{-- 🛒 Products --}}
-                <li class="nav-item">
-                    <a href="{{ route('user.product') }}" class="nav-link {{ request()->is(['user/products','product/*']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-box"></i>
-                        <strong class="brand-text">Products</strong>
-                    </a>
-                </li>
+                {{-- 📦 Products --}}
+                    <li class="nav-item">
+                        <a href="{{ route('user.product') }}" class="nav-link {{ request()->is(['user/products','product/*']) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-box-open"></i>
+                            <strong class="brand-text">Products</strong>
+                        </a>
+                    </li>
 
-                {{-- 🏪 Become A Seller --}}
-                <li class="nav-item">
-                    <a href="#" class="nav-link" wire:click.prevent="show_form_request">
-                        <i class="nav-icon fas fa-store"></i>
-                        <strong class="brand-text">Become A Seller</strong>
-                    </a>
-                </li>
+                    {{-- 🏪 Become A Seller --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" wire:click.prevent="show_form_request">
+                            <i class="nav-icon fas fa-store-alt"></i>
+                            <strong class="brand-text">Become A Seller</strong>
+                        </a>
+                    </li>
 
-                {{-- 🏬 Stores --}}
-                <li class="nav-item">
-                    <a href="{{ route('user.stores') }}" class="nav-link {{ request()->is('user/stores') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-store-alt"></i>
-                        <strong class="brand-text">Stores</strong>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('user.wishlist') }}" class="nav-link {{ request()->is('user/WishList') ? 'active' : '' }} ">
-                        <i class=" nav-icon fas fa-heart"></i>
-                        <strong class="brand-text" >My Wishlist</strong>
-                    </a>
-                </li>
+                    {{-- 🏬 Stores --}}
+                    <li class="nav-item">
+                        <a href="{{ route('user.stores') }}" class="nav-link {{ request()->is('user/stores') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-warehouse"></i>
+                            <strong class="brand-text">Stores</strong>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('user.cart') }}" class="nav-link {{ request()->is('user/Shopping_cart') ? 'active' : '' }}">
-                        <i class=" nav-icon fas fa-cart-plus"></i>
-                        <strong class="brand-text"> Shopping Cart</strong>
-                    </a>
-                </li>
+                    {{-- 💖 Wishlist --}}
+                    <li class="nav-item">
+                        <a href="{{ route('user.wishlist') }}" class="nav-link {{ request()->is('user/WishList') ? 'active' : '' }} ">
+                            <i class="nav-icon fas fa-heart"></i>
+                            <strong class="brand-text">My Wishlist</strong>
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('payments') }}" class="nav-link {{ request()->is('user/payments') ? 'active' : '' }} ">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <strong class="brand-text" >Payments</strong>
-                    </a>
-                </li>
+                    {{-- 🛒 Shopping Cart --}}
+                    <li class="nav-item">
+                        <a href="{{ route('user.cart') }}" class="nav-link {{ request()->is('user/Shopping_cart') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <strong class="brand-text">Shopping Cart</strong>
+                        </a>
+                    </li>
 
+                    {{-- 🏷️ Tags / Main Categories --}}
+                    <li class="nav-item">
+                        <a href="{{ route('user.main_categories') }}" class="nav-link {{ request()->is('user/main_categories','user/main-categories/show/*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <strong class="brand-text">Tags</strong>
+                        </a>
+                    </li>
 
-                {{-- 👤 Profile --}}
-                <li class="nav-item">
-                    <a href="{{ route('profile.edit') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <strong class="brand-text">Control Profile</strong>
-                    </a>
-                </li>
+                    {{-- 💵 Payments --}}
+                    <li class="nav-item">
+                        <a href="{{ route('payments') }}" class="nav-link {{ request()->is('user/payments') ? 'active' : '' }} ">
+                            <i class="nav-icon fas fa-credit-card"></i>
+                            <strong class="brand-text">Payments</strong>
+                        </a>
+                    </li>
+
+                    {{-- 👤 Control Profile --}}
+                    <li class="nav-item">
+                        <a href="{{ route('profile.edit') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user-cog"></i>
+                            <strong class="brand-text">Control Profile</strong>
+                        </a>
+                    </li>
+
 
                 {{-- 🔓 Logout (ممكن تفعله لاحقًا) --}}
 
