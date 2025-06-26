@@ -13,10 +13,12 @@ class categories extends Model
     {
         return $this->belongsToMany(stores::class);
     }
+    
     public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+{
+    return $this->belongsToMany(Product::class, 'categories_product', 'categories_id', 'product_id');
+}
+
     public function mainCategory()
     {
         return $this->belongsTo(MainCategories::class, 'main_category_id');

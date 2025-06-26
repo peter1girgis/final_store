@@ -58,11 +58,14 @@ class Product extends Model
         });
     }
     public function categories()
-    {
+{
+    return $this->belongsToMany(categories::class, 'categories_product', 'product_id', 'categories_id');
+}
+public function payments()
+{
+    return $this->hasMany(\App\Models\Payments::class);
+}
 
-        return $this->belongsToMany(categories::class);
-
-    }
     // app/Models/Product.php
 
 

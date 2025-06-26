@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
+use App\Livewire\User\ShowMainCategories;
 use App\Livewire\User\WishlistProducts;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\MainCategories as AdminMainCategories;
@@ -59,7 +60,10 @@ Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/product/{id}', ShowProduct::class)->name('product.show');
     Route::get('/user/main_categories', MainCategories::class)->name('user.main_categories');
     Route::get('/user/WishList', WishlistProducts::class)->name('user.wishlist');
+
     Route::get('user/Shopping_cart', Cart::class)->name('user.cart')->middleware('auth');
+    Route::get('/user/main-categories/show/{mainCategoryId}', ShowMainCategories::class)->name('main-category.show');
+
 });
 
 Route::get('/', function () {
