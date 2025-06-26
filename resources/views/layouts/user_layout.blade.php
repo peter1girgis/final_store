@@ -65,30 +65,36 @@
     <script type="text/javascript" src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
 
     <script>
-    const scrollContainer = document.getElementById('categoryScroll');
-    const scrollAmount = 600; // ← مقدار التحرك اليدوي
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollContainer = document.getElementById('categoryScroll');
 
-    function scrollRight() {
-        scrollContainer.scrollLeft += scrollAmount;
-    }
+            if (!scrollContainer) return; // ← حماية إضافية
 
-    function scrollLeft() {
-        scrollContainer.scrollLeft -= scrollAmount;
-    }
+            const scrollAmount = 600;
 
-    // Auto-scroll مستمر
-    let autoScroll = setInterval(() => {
-        scrollContainer.scrollLeft += 1;
-    }, 20);
+            function scrollRight() {
+                scrollContainer.scrollLeft += scrollAmount;
+            }
 
-    // إيقاف المؤقت لو دخل الماوس
-    scrollContainer.addEventListener('mouseenter', () => clearInterval(autoScroll));
-    scrollContainer.addEventListener('mouseleave', () => {
-        autoScroll = setInterval(() => {
-            scrollContainer.scrollLeft += 1;
-        }, 20);
-    });
-</script>
+            function scrollLeft() {
+                scrollContainer.scrollLeft -= scrollAmount;
+            }
+
+            // Auto-scroll
+            let autoScroll = setInterval(() => {
+                scrollContainer.scrollLeft += 1;
+            }, 20);
+
+            // إيقاف عند دخول الماوس
+            scrollContainer.addEventListener('mouseenter', () => clearInterval(autoScroll));
+            scrollContainer.addEventListener('mouseleave', () => {
+                autoScroll = setInterval(() => {
+                    scrollContainer.scrollLeft += 1;
+                }, 20);
+            });
+        });
+    </script>
+
 
 
 

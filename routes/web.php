@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
 use App\Livewire\User\WishlistProducts;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\MainCategories as AdminMainCategories;
 use App\Livewire\Admin\Payments as AdminPayments;
 use App\Livewire\Admin\Seller\Stores;
 use App\Livewire\Admin\SellerRequests;
@@ -15,6 +16,7 @@ use App\Livewire\Seller\AddProduct;
 use App\Livewire\Seller\MyStore;
 use App\Livewire\Seller\Payments as SellerPayments;
 use App\Livewire\Seller\Stores as SellerStores;
+use App\Livewire\User\MainCategories;
 use App\Livewire\User\ProductsList;
 use App\Livewire\User\ShowProduct;
 use App\Livewire\User\ShowStores;
@@ -55,6 +57,7 @@ Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/user/pay/cancel', [StripeController::class, 'cancel'])->name('cancel');
     Route::get('/user/payments', LivewirePayments::class)->name('payments');
     Route::get('/product/{id}', ShowProduct::class)->name('product.show');
+    Route::get('/user/main_categories', MainCategories::class)->name('user.main_categories');
     Route::get('/user/WishList', WishlistProducts::class)->name('user.wishlist');
     Route::get('user/Shopping_cart', Cart::class)->name('user.cart')->middleware('auth');
 });
@@ -72,5 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/admin/mainCategories', AdminMainCategories::class)->name('admin.mainCategories');
 
 require __DIR__.'/auth.php';

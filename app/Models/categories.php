@@ -17,4 +17,9 @@ class categories extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+    public function mainCategory()
+    {
+        return $this->belongsTo(MainCategories::class, 'main_category_id');
+    }
+
 }
