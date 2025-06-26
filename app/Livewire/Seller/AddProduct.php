@@ -43,7 +43,7 @@ class AddProduct extends Component
 
 
     public function addNewProduct (){
-        $this->reset(['state', 'main_image', 'sub_images']);
+        $this->reset(['state', 'main_image', 'sub_images','selected_categories']);
         $this->dispatch('addProductModal');
     }
     public function save_changes (){

@@ -59,7 +59,7 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $payment->payment_id }}</td>
-                <td>{{ $payment->product_names }}</td>
+                <td>{{ $payment->product->name }}</td>
                 <td>{{ $payment->amount }} {{ strtoupper($payment->currency) }}</td>
                 <td>{{ $payment->total_quantity }}</td>
                 <td>{{ ucfirst($payment->payment_method ?? 'N/A') }}</td>

@@ -4,6 +4,7 @@ namespace App\Livewire\User;
 
 use App\Models\CartItem;
 use App\Models\categories;
+use App\Models\payments;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -15,6 +16,7 @@ class ProductsList extends Component
     use WithPagination;
     public $state = [];
     public $selected_categories = [];
+
     public $all_categories = [];
     public $topRatedProducts = [];
 
@@ -67,15 +69,27 @@ class ProductsList extends Component
 
     public function render()
     {
+        $topProducts = payments::select('product_id', \DB::raw('SUM(total_quantity) as total_sales'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_sales')
+            ->limit(5)
+            ->get();
+
+        $productIds = $topProducts->pluck('product_id')->toArray();
+
+        $productsMap = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+        $topSellingProducts = collect($productIds)->map(fn($id) => $productsMap[$id])->filter();
+
         $products = Product::latest()->paginate(8);
         $this->all_categories = categories::select('id', 'name','image')->get();
         $this->topRatedProducts = Product::with('store')
             ->withAvg('evaluations', 'rating')
             ->orderByDesc('evaluations_avg_rating')
-            ->take(5)
+            ->take(9)
             ->get();
         return view('livewire.user.products-list',
-        ['products' => $products , 'categories' =>  $this->all_categories ,'topRatedProducts' => $this->topRatedProducts])
+        ['products' => $products , 'categories' =>  $this->all_categories ,'topRatedProducts' => $this->topRatedProducts , 'topSellingProducts' => $topSellingProducts])
         ->layout('layouts.user_layout');
     }
 }

@@ -22,7 +22,7 @@ class StripeController extends Controller
     $userId = auth()->id();
     $stripeSessions = session()->get('stripe_sessions', []);
 
-    // استخراج البيانات الخاصة بالمتجر الحالي
+    // استخراج بيانات المتجر الحالي من session
     $data = collect($stripeSessions)->firstWhere('session_id', $sessionId);
 
     if (!$data) {
@@ -31,7 +31,7 @@ class StripeController extends Controller
 
     $storeId = $data['store_id'];
 
-    // جلب المنتجات الخاصة بهذا المتجر فقط
+    // جلب المنتجات الخاصة بالمتجر
     $items = CartItem::with('product.store')
         ->where('user_id', $userId)
         ->whereHas('product', fn($q) => $q->where('store_id', $storeId))
@@ -44,7 +44,7 @@ class StripeController extends Controller
     $store = $items->first()->product->store;
     $storeOwner = $store->user ?? null;
 
-    // تعديل الكمية في الكارت إذا تجاوزت المخزون
+    // تعديل الكمية في الكارت لو تجاوزت المخزون
     foreach ($items as $item) {
         $product = $item->product;
 
@@ -52,33 +52,37 @@ class StripeController extends Controller
             $item->quantity = $product->stock;
         }
 
-        // إذا أصبحت الكمية 0 بعد التعديل
         if ($item->quantity <= 0) {
-            continue; // تجاهل هذا المنتج
+            continue;
         }
 
-        $item->save(); // لحفظ التعديل على الكمية
+        $item->save();
     }
 
-    // إعادة تحميل العناصر بعد التعديلات
+    // فلترة المنتجات بعد التعديل
     $items = $items->filter(fn($item) => $item->quantity > 0);
 
-    $totalQuantity = $items->sum('quantity');
-    $totalAmount = $items->sum(fn($item) => $item->product->price * $item->quantity);
     $productNames = $items->pluck('product.name')->implode(', ');
+    $totalAmount = $items->sum(fn($item) => $item->product->price * $item->quantity);
 
-    // حفظ عملية الدفع
-    payments::create([
-        'user_id' => $userId,
-        'store_id' => $storeId,
-        'payment_id' => $session->id,
-        'product_names' => $productNames,
-        'total_quantity' => $totalQuantity,
-        'amount' => $totalAmount,
-        'currency' => $session->currency,
-        'payment_status' => $session->payment_status ?? 'paid',
-        'stripe_store_account_id' => $store->stripe_account_id,
-    ]);
+    // حفظ كل منتج في صف منفصل داخل جدول payments
+    foreach ($items as $item) {
+        $product = $item->product;
+        $quantity = $item->quantity;
+        $totalPrice = $product->price * $quantity;
+
+        payments::create([
+            'user_id' => $userId,
+            'store_id' => $storeId,
+            'payment_id' => $session->id,
+            'product_id' => $product->id,
+            'total_quantity' => $quantity,
+            'amount' => $totalPrice,
+            'currency' => $session->currency,
+            'payment_status' => $session->payment_status ?? 'paid',
+            'stripe_store_account_id' => $store->stripe_account_id,
+        ]);
+    }
 
     // إشعار للمشتري
     Notification::create([
@@ -100,7 +104,7 @@ class StripeController extends Controller
         ]);
     }
 
-    // تقليل الكمية أو حذف المنتجات المنتهية
+    // تحديث المخزون أو حذف المنتج لو نفد
     foreach ($items as $item) {
         $product = $item->product;
         $product->stock -= $item->quantity;
@@ -123,12 +127,12 @@ class StripeController extends Controller
         }
     }
 
-    // حذف العناصر من السلة الخاصة بهذا المتجر فقط
+    // حذف المنتجات من الكارت
     CartItem::where('user_id', $userId)
         ->whereIn('id', $items->pluck('id'))
         ->delete();
 
-    // نسيان بيانات الجلسة
+    // حذف بيانات stripe session من الـ session
     session()->forget('stripe_sessions');
 
     return redirect()->route('payments')->with('message', [
@@ -136,6 +140,7 @@ class StripeController extends Controller
         'text' => 'Payment done successfully.'
     ]);
 }
+
 
 
 

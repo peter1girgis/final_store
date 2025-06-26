@@ -106,6 +106,29 @@
                 @endforeach
             </div>
         </div>
+        <div class="container py-4">
+            <h4 class="mb-4">🔥 Best Selling Products</h4>
+            <div class="row">
+                @forelse ($topSellingProducts as $product)
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow h-100">
+                            <img src="{{ asset('storage/' . $product->main_image) }}"
+                                class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
+                                <p><strong>Price:</strong> ${{ $product->price }}</p>
+                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <p>No sales data available.</p>
+                @endforelse
+            </div>
+        </div>
+
+
     </div>
 
 
