@@ -19,6 +19,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}">
 
     <livewire:styles />
+    <style>
+        #categoryScroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+
     </head>
     <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -56,6 +63,35 @@
     <script src="{{ asset('backend/dist/js/adminlte.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
+
+    <script>
+    const scrollContainer = document.getElementById('categoryScroll');
+    const scrollAmount = 600; // ← مقدار التحرك اليدوي
+
+    function scrollRight() {
+        scrollContainer.scrollLeft += scrollAmount;
+    }
+
+    function scrollLeft() {
+        scrollContainer.scrollLeft -= scrollAmount;
+    }
+
+    // Auto-scroll مستمر
+    let autoScroll = setInterval(() => {
+        scrollContainer.scrollLeft += 1;
+    }, 20);
+
+    // إيقاف المؤقت لو دخل الماوس
+    scrollContainer.addEventListener('mouseenter', () => clearInterval(autoScroll));
+    scrollContainer.addEventListener('mouseleave', () => {
+        autoScroll = setInterval(() => {
+            scrollContainer.scrollLeft += 1;
+        }, 20);
+    });
+</script>
+
+
+
 
     <script>
     $(document).ready(function() {

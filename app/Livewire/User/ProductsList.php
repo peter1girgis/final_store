@@ -8,13 +8,17 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 
 class ProductsList extends Component
 {
+    use WithPagination;
     public $state = [];
     public $selected_categories = [];
     public $all_categories = [];
+    public $topRatedProducts = [];
+
+    protected $paginationTheme = 'bootstrap';
     public function addToCart()
     {
         $userId = Auth::id();
@@ -63,10 +67,15 @@ class ProductsList extends Component
 
     public function render()
     {
-        $products = Product::latest()->paginate();
-
+        $products = Product::latest()->paginate(8);
+        $this->all_categories = categories::select('id', 'name','image')->get();
+        $this->topRatedProducts = Product::with('store')
+            ->withAvg('evaluations', 'rating')
+            ->orderByDesc('evaluations_avg_rating')
+            ->take(5)
+            ->get();
         return view('livewire.user.products-list',
-        ['products' => $products ])
+        ['products' => $products , 'categories' =>  $this->all_categories ,'topRatedProducts' => $this->topRatedProducts])
         ->layout('layouts.user_layout');
     }
 }

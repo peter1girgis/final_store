@@ -18,6 +18,42 @@
 
     <!-- Main content -->
     <div class="row px-3">
+        <div class="position-relative bg-light py-2" style="overflow: hidden;">
+
+            <!-- LEFT ARROW -->
+            {{-- <button onclick="scrollLeft()"
+                    class="btn btn-light position-absolute start-0 z-10 shadow"
+                    style="top: 50%; transform: translateY(-50%); height: 60px; width: 40px;">
+                <i class="fas fa-chevron-left"></i>
+            </button> --}}
+
+            <!-- CATEGORY SCROLL CONTAINER -->
+            <div id="categoryScroll" class="d-flex gap-3 px-5"
+                style="overflow-x: auto; scroll-behavior: smooth; white-space: nowrap;">
+                @foreach ($categories as $cat)
+                    <div class="card text-center px-3 py-2" style="min-width: 170px; cursor: pointer;" style="justify-items: center;">
+                        <img src="{{ asset('storage/' . $cat->image) }}"
+                            class="card-img-top rounded-circle border"
+                            style="height: 80px; width: 80px; object-fit: cover; " alt="{{ $cat->name }}">
+                        <div class="card-body p-1">
+                            <small class="text-muted">{{ $cat->name }}</small>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- RIGHT ARROW -->
+            {{-- <button onclick="scrollRight()"
+                    class="btn btn-light position-absolute end-0 z-10 shadow"
+                    style="top: 50%; transform: translateY(-50%); height: 60px; width: 40px;">
+                <i class="fas fa-chevron-right"></i>
+            </button> --}}
+
+        </div>
+
+
+
+
         @foreach ($products as $product)
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
@@ -48,7 +84,31 @@
                 </div>
             </div>
         @endforeach
+        <div>
+            {{ $products->links() }}
+        </div>
+        <div class="container py-4">
+            <h4 class="mb-4">🔥 Top Rated Products</h4>
+            <div class="row">
+                @foreach ($topRatedProducts as $product)
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow h-100">
+                            <img src="{{ asset('storage/' . $product->main_image) }}"
+                                class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
+                                <p><strong>Rating:</strong> ⭐ {{ number_format($product->evaluations_avg_rating, 1) }}/5</p>
+                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </div>
+
+
 
     <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-xl" role="document"> {{-- أكبر عرض ممكن --}}
