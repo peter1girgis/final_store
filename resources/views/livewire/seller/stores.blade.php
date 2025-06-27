@@ -86,8 +86,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane mr-1"></i> Send</button>
+                        <button class="btn btn-outline-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
+                        <button type="submit" class="btn btn-outline-primary"><i class="fa fa-paper-plane mr-1"></i> Send</button>
                     </div>
                 </div>
             </form>
@@ -150,21 +150,36 @@
                 </div>
 
                 {{-- منتجات المتجر --}}
-                @if (!empty(@$store_products) && count(@$store_products) > 0)
+               @if (!empty($store_products) && count($store_products) > 0)
                     <div>
                         <label><strong>Store Products</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 15px;">
                             @foreach (@$store_products as $product)
-                                <div class="card flex-shrink-0" style="width: 180px;">
-                                    @if ($product['main_image'])
-                                        <img src="{{ asset('storage/' . @$product['main_image']) }}" class="card-img-top" style="height: 130px; object-fit: cover;" alt="Product Image">
+                                <div class="card flex-shrink-0 position-relative" style="width: 180px;">
+                                    {{-- Out of Stock Label --}}
+                                    @if (!@$product['is_active'] || @$product['stock'] == 0)
+                                        <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end" style="z-index: 5;">
+                                            Out of Stock
+                                        </div>
+                                    @endif
+
+                                    {{-- Main Image --}}
+                                    @if (@$product['main_image'])
+                                        <img src="{{ asset('storage/' . @$product['main_image']) }}"
+                                            class="card-img-top"
+                                            style="height: 130px; object-fit: cover;" alt="Product Image">
                                     @else
-                                        <div class="bg-light d-flex justify-content-center align-items-center" style="height: 130px;">
+                                        <div class="bg-light d-flex justify-content-center align-items-center"
+                                            style="height: 130px;">
                                             <span class="text-muted">No Image</span>
                                         </div>
                                     @endif
+
+                                    {{-- Body --}}
                                     <div class="card-body p-2">
-                                        <h6 class="card-title mb-1" style="font-size: 14px;">{{ \Illuminate\Support\Str::limit(@$product['name'], 20) }}</h6>
+                                        <h6 class="card-title mb-1" style="font-size: 14px;">
+                                            {{ \Illuminate\Support\Str::limit(@$product['name'], 20) }}
+                                        </h6>
                                         <p class="card-text text-muted" style="font-size: 12px;">
                                             {{ \Illuminate\Support\Str::limit(@$product['description'], 40) }}
                                         </p>
@@ -180,7 +195,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
                 </button>
             </div>

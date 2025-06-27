@@ -57,7 +57,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-end mb-2">
-                    <button wire:click.prevent="addNewProduct" class="btn btn-primary"><i class="fa fa-plus-circle mr-1"></i> Add New Product</button>
+                    <button wire:click.prevent="addNewProduct" class="btn btn-outline-primary"><i class="fa fa-plus-circle mr-1"></i> Add New Product</button>
                 </div>
             </div>
         </div>
@@ -69,7 +69,15 @@
     <div class="row px-3">
         @foreach ($products as $product)
             <div class="col-md-6 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 position-relative"> {{-- نضيف position-relative هنا --}}
+
+                    {{-- شارة Out of Stock --}}
+                    @if (!$product->is_active || $product->stock == 0)
+                        <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end" style="z-index: 10;">
+                            Out of Stock
+                        </div>
+                    @endif
+
                     <div class="row no-gutters">
 
                         <!-- الجزء الخاص بالصورة -->
@@ -89,7 +97,7 @@
                                 <h5 class="card-title">{{ @$product->name }}</h5>
                                 <p class="card-text">{{ Str::limit(@$product->description, 100) }}</p>
                                 <p class="text-success fw-bold mb-2">{{ @$product->price }} EGP</p>
-                                <a href="" class="btn btn-sm btn-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})">View</a>
+                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ $product->id ?? '' }})">View</a>
                             </div>
                         </div>
 
@@ -97,6 +105,7 @@
                 </div>
             </div>
         @endforeach
+
         <div>
             {{ $products->links() }} {{-- ✅ --}}
         </div>
@@ -104,7 +113,7 @@
     </div>
 
     <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog modal-xl" role="document"> {{-- أكبر عرض ممكن --}}
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -117,7 +126,16 @@
             </div>
 
             <div class="modal-body">
-                <div class="row">
+
+                {{-- Start: OUT OF STOCK BADGE --}}
+                @if (!@$state['is_active'] || @$state['stock'] == 0)
+                    <div class="position-absolute top-0 start-0 bg-danger text-white px-3 py-1 rounded-end" style="z-index: 1050;">
+                        Out of Stock
+                    </div>
+                @endif
+                {{-- End: OUT OF STOCK BADGE --}}
+
+                <div class="row position-relative">
                     {{-- Main Image --}}
                     <div class="col-md-4">
                         @if (!empty(@$state['main_image']))
@@ -142,48 +160,51 @@
 
                         <div class="form-group">
                             <label><strong>Description</strong></label>
-                            <textarea class="form-control" rows="4" wire:model.defer="state.description" ></textarea>
+                            <textarea class="form-control" rows="4" wire:model.defer="state.description"></textarea>
                         </div>
 
                         <div class="form-group row">
                             <div class="col">
                                 <label><strong>Price</strong></label>
-                                <input type="text" class="form-control text-success" wire:model.defer="state.price" >
+                                <input type="text" class="form-control text-success" wire:model.defer="state.price">
                             </div>
                             <div class="col">
                                 <label><strong>Old Price</strong></label>
-                                <input type="text" class="form-control text-muted" wire:model.defer="state.old_price" >
+                                <input type="text" class="form-control text-muted" wire:model.defer="state.old_price">
                             </div>
                             <div class="col">
                                 <label><strong>Stock</strong></label>
-                                <input type="number" class="form-control" wire:model.defer="state.stock" >
+                                <input type="number" class="form-control {{ @$state['stock'] == 0 ? 'text-danger font-weight-bold' : '' }}"
+                                       wire:model.defer="state.stock">
                             </div>
-                            <div class="form-group mt-3">
-                                    <label><strong>Select Categories</strong></label>
-                                    <select class="form-control" wire:change="addCategory($event.target.value)">
-                                        <option value="">-- Choose Category --</option>
-                                        @foreach (@$all_categories as $category)
-                                            @if (!in_array($category->id, @$selected_categories))
-                                                <option value="{{ @$category->id }}">{{ @$category->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
 
-                                    {{-- Display selected categories --}}
-                                    <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
-                                        @foreach (@$selected_categories as $catId)
-                                            @php
-                                                @$catName = @$all_categories->firstWhere('id', $catId)?->name;
-                                            @endphp
-                                            <div class="badge badge-primary d-flex align-items-center">
-                                                <span>{{ @$catName }}</span>
-                                                <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
-                                                    &times;
-                                                </button>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                            {{-- Category Selector --}}
+                            <div class="form-group mt-3">
+                                <label><strong>Select Categories</strong></label>
+                                <select class="form-control" wire:change="addCategory($event.target.value)">
+                                    <option value="">-- Choose Category --</option>
+                                    @foreach (@$all_categories as $category)
+                                        @if (!in_array($category->id, @$selected_categories))
+                                            <option value="{{ @$category->id }}">{{ @$category->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+
+                                {{-- Display selected categories --}}
+                                <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
+                                    @foreach (@$selected_categories as $catId)
+                                        @php
+                                            @$catName = @$all_categories->firstWhere('id', $catId)?->name;
+                                        @endphp
+                                        <div class="badge badge-primary d-flex align-items-center">
+                                            <span>{{ @$catName }}</span>
+                                            <button type="button" class="ml-2 btn btn-sm btn-danger btn-circle" wire:click="removeCategory({{ $catId }})" style="padding: 0 5px; margin-left: 5px;">
+                                                &times;
+                                            </button>
+                                        </div>
+                                    @endforeach
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -196,9 +217,9 @@
                             @foreach (@$state['sub_images'] as $img)
                                 <div class="flex-shrink-0">
                                     <img src="{{ asset('storage/' . @$img) }}"
-                                        class="rounded border"
-                                        style="height: 190px; width: auto; object-fit: contain;"
-                                        alt="Sub Image">
+                                         class="rounded border"
+                                         style="height: 190px; width: auto; object-fit: contain;"
+                                         alt="Sub Image">
                                 </div>
                             @endforeach
                         </div>
@@ -207,17 +228,18 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close
                 </button>
-                <button type="button" wire:click = "save_changes"  class="btn btn-success">
-                        <i class="fa fa-save mr-1"></i> Save changes
+                <button type="button" wire:click="save_changes" class="btn btn-outline-success">
+                    <i class="fa fa-save mr-1"></i> Save changes
                 </button>
             </div>
 
         </div>
     </div>
 </div>
+
     <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">

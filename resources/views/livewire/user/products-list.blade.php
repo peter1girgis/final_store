@@ -56,31 +56,40 @@
 
         @foreach ($products as $product)
             <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="row no-gutters">
+                {{-- ✅ تأكد إن الكرت فيه position-relative --}}
+                <div class="card h-100 position-relative overflow-hidden">
 
-                        <!-- الجزء الخاص بالصورة -->
+                    {{-- ✅ شريط "Out of Stock" --}}
+                    @if (!$product->is_active)
+                        <div style="position: absolute; top: 0; left: 0; z-index: 10;"
+                            class="bg-danger text-white px-2 py-1 rounded-end">
+                            Out of Stock
+                        </div>
+                    @endif
+
+                    <div class="row g-0">
                         <div class="col-4">
-                            @if(@$product->main_image)
-                                <img src="{{ asset('storage/' . @$product->main_image) }}" class="card-img h-100" alt="{{ $product->name }}">
+                            @if ($product->main_image)
+                                <img src="{{ asset('storage/' . $product->main_image) }}" class="img-fluid h-100 object-fit-cover" alt="{{ $product->name }}">
                             @else
                                 <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
                                     No Image
                                 </div>
                             @endif
                         </div>
-
-                        <!-- الجزء الخاص بالمحتوى -->
                         <div class="col-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ @$product->name }}</h5>
-                                <p class="card-text">{{ Str::limit(@$product->description, 100) }}</p>
-                                <p class="text-success fw-bold mb-2">{{ @$product->price }} EGP</p>
-                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
+                                <p class="text-success fw-bold mb-2">{{ $product->price }} EGP</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary"
+                                    wire:click.prevent="view_item({{ $product->id }})">
+                                    View
+                                </a>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         @endforeach
@@ -92,18 +101,30 @@
             <div class="row">
                 @foreach ($topRatedProducts as $product)
                     <div class="col-md-4 mb-4">
-                        <div class="card shadow h-100">
+                        <div class="card shadow h-100 position-relative">
+                            {{-- ✅ شريط Out of Stock --}}
+                            @if (!$product->is_active)
+                                <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end">
+                                    Out of Stock
+                                </div>
+                            @endif
+
                             <img src="{{ asset('storage/' . $product->main_image) }}"
                                 class="card-img-top" style="height: 200px; object-fit: cover;">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->name }}</h5>
                                 <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
                                 <p><strong>Rating:</strong> ⭐ {{ number_format($product->evaluations_avg_rating, 1) }}/5</p>
-                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+
+                                <a href="#" class="btn btn-sm btn-outline-primary"
+                                    wire:click.prevent="view_item({{ $product->id }})">
+                                    View
+                                </a>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
         <div class="container py-4">
@@ -111,15 +132,28 @@
             <div class="row">
                 @forelse ($topSellingProducts as $product)
                     <div class="col-md-4 mb-4">
-                        <div class="card shadow h-100">
+                        {{-- لازم تخلي الكارت position-relative عشان الشريط يظهر صح --}}
+                        <div class="card shadow h-100 position-relative overflow-hidden">
+
+                            {{-- ✅ شريط Out of Stock --}}
+                            @if (!$product->is_active)
+                                <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end"
+                                    style="z-index: 10;">
+                                    Out of Stock
+                                </div>
+                            @endif
+
                             <img src="{{ asset('storage/' . $product->main_image) }}"
                                 class="card-img-top" style="height: 200px; object-fit: cover;">
+
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->name }}</h5>
                                 <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
-                                <p><strong>Price:</strong> ${{ $product->price }}</p>
-                                <a href="" class="btn btn-sm btn-outline-primary" wire:click.prevent="view_item({{ @$product->id ?? '' }})">View</a>
+                                <p><strong>Price:</strong> {{ $product->price }} EGP</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary"
+                                    wire:click.prevent="view_item({{ $product->id }})">View</a>
                             </div>
+
                         </div>
                     </div>
                 @empty
@@ -128,13 +162,12 @@
             </div>
         </div>
 
-
     </div>
 
 
 
     <div class="modal fade" id="show_product" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog modal-xl" role="document"> {{-- أكبر عرض ممكن --}}
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -147,6 +180,15 @@
             </div>
 
             <div class="modal-body">
+
+                {{-- 🔴 تنبيه حالة Out of Stock --}}
+                @if (isset($state['stock']) && $state['stock'] == 0 || !@$state['is_active'])
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <strong>This product is currently out of stock.</strong>
+                    </div>
+                @endif
+
                 <div class="row">
                     {{-- Main Image --}}
                     <div class="col-md-4">
@@ -186,13 +228,17 @@
                             </div>
                             <div class="col">
                                 <label><strong>Stock</strong></label>
-                                <input type="number" class="form-control" wire:model.defer="state.stock" readonly>
+                                <input type="number"
+                                       class="form-control {{ (isset($state['stock']) && $state['stock'] == 0) ? 'text-danger font-weight-bold' : '' }}"
+                                       wire:model.defer="state.stock"
+                                       readonly>
                             </div>
                         </div>
                     </div>
+
+                    {{-- Categories --}}
                     <div class="form-group mt-3">
                         <label><strong>Categories</strong></label>
-
                         <div class="d-flex flex-wrap mt-2" style="gap: 10px;">
                             @if (count(@$selected_categories) >= 1)
                                 @foreach (@$selected_categories as $catId)
@@ -208,10 +254,8 @@
                                     no categories found related to this item
                                 </span>
                             @endif
-
                         </div>
                     </div>
-
                 </div>
 
                 {{-- Sub Images --}}
@@ -219,13 +263,12 @@
                     <div class="mt-4">
                         <label><strong>Other Images</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 10px;">
-
                             @foreach (@$state['sub_images'] as $img)
                                 <div class="flex-shrink-0">
                                     <img src="{{ asset('storage/' . @$img) }}"
-                                        class="rounded border"
-                                        style="height: 190px; width: auto; object-fit: contain;"
-                                        alt="Sub Image">
+                                         class="rounded border"
+                                         style="height: 190px; width: auto; object-fit: contain;"
+                                         alt="Sub Image">
                                 </div>
                             @endforeach
                         </div>
@@ -234,16 +277,17 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-sm btn-outline-primary" wire:click="addToCart({{ @$state['id']}})">
+                <button class="btn btn-sm btn-outline-primary"
+                        wire:click="addToCart({{ @$state['id']}})"
+                        @if (empty($state['stock']) || $state['stock'] == 0 || !$state['is_active']) disabled @endif>
                     <i class="fas fa-cart-plus"></i> Add to Cart
                 </button>
+
                 @if (!empty($state['id']))
                     <a href="{{ route('product.show', $state['id']) }}" class="btn btn-sm btn-outline-primary">
                         <i class="fas fa-eye"></i> More Details
                     </a>
                 @endif
-
-
 
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                     <i class="fa fa-times mr-1"></i> Close

@@ -155,16 +155,31 @@
                         <label><strong>Store Products</strong></label>
                         <div class="d-flex overflow-auto" style="gap: 15px;">
                             @foreach (@$store_products as $product)
-                                <div class="card flex-shrink-0" style="width: 180px;">
+                                <div class="card flex-shrink-0 position-relative" style="width: 180px;">
+                                    {{-- Out of Stock Label --}}
+                                    @if (!@$product['is_active'] || @$product['stock'] == 0)
+                                        <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end" style="z-index: 5;">
+                                            Out of Stock
+                                        </div>
+                                    @endif
+
+                                    {{-- Main Image --}}
                                     @if (@$product['main_image'])
-                                        <img src="{{ asset('storage/' . @$product['main_image']) }}" class="card-img-top" style="height: 130px; object-fit: cover;" alt="Product Image">
+                                        <img src="{{ asset('storage/' . @$product['main_image']) }}"
+                                            class="card-img-top"
+                                            style="height: 130px; object-fit: cover;" alt="Product Image">
                                     @else
-                                        <div class="bg-light d-flex justify-content-center align-items-center" style="height: 130px;">
+                                        <div class="bg-light d-flex justify-content-center align-items-center"
+                                            style="height: 130px;">
                                             <span class="text-muted">No Image</span>
                                         </div>
                                     @endif
+
+                                    {{-- Body --}}
                                     <div class="card-body p-2">
-                                        <h6 class="card-title mb-1" style="font-size: 14px;">{{ \Illuminate\Support\Str::limit(@$product['name'], 20) }}</h6>
+                                        <h6 class="card-title mb-1" style="font-size: 14px;">
+                                            {{ \Illuminate\Support\Str::limit(@$product['name'], 20) }}
+                                        </h6>
                                         <p class="card-text text-muted" style="font-size: 12px;">
                                             {{ \Illuminate\Support\Str::limit(@$product['description'], 40) }}
                                         </p>
@@ -177,6 +192,7 @@
                         </div>
                     </div>
                 @endif
+
             </div>
 
             <div class="modal-footer">

@@ -46,30 +46,35 @@ class AddProduct extends Component
         $this->reset(['state', 'main_image', 'sub_images','selected_categories']);
         $this->dispatch('addProductModal');
     }
-    public function save_changes (){
-        $this->validate([
-            'state.name' => 'required|string|max:255',
-            'state.description' => 'nullable|string',
-            'state.price' => 'required|numeric',
-            'state.old_price' => 'nullable|numeric',
-            'state.stock' => 'required|integer|min:0',
-        ]);
-        $this->state['store_id'] = auth()->user()->store->id ;
-        $product = Product::findOrFail($this->state['id']); // تأكد إن id موجود في $state
+    public function save_changes()
+{
+    $this->validate([
+        'state.name' => 'required|string|max:255',
+        'state.description' => 'nullable|string',
+        'state.price' => 'required|numeric',
+        'state.old_price' => 'nullable|numeric',
+        'state.stock' => 'required|integer|min:0',
+    ]);
 
-        $product->update([
-            'store_id' => $this->state['store_id'],
-            'name' => $this->state['name'],
-            'description' => $this->state['description'],
-            'price' => $this->state['price'],
-            'old_price' => $this->state['old_price'],
-            'stock' => $this->state['stock'],
-        ]);
-        $product->categories()->sync($this->selected_categories);
+    $this->state['store_id'] = auth()->user()->store->id;
+    $product = Product::findOrFail($this->state['id']);
 
-        $this->reset(['state', 'main_image', 'sub_images']);
-        $this->dispatch('view_product_hide', ['message' => 'Product added successfully!']);
-    }
+    $product->update([
+        'store_id'    => $this->state['store_id'],
+        'name'        => $this->state['name'],
+        'description' => $this->state['description'],
+        'price'       => $this->state['price'],
+        'old_price'   => $this->state['old_price'],
+        'stock'       => $this->state['stock'],
+        'is_active'   => $this->state['stock'] > 0 ? true : false,  // ✅ التحديث التلقائي
+    ]);
+
+    $product->categories()->sync($this->selected_categories);
+
+    $this->reset(['state', 'main_image', 'sub_images']);
+    $this->dispatch('view_product_hide', ['message' => 'Product updated successfully!']);
+}
+
     public function view_item(Product $item){
         $this->state = [];
 		$this->state  = $item->toArray();

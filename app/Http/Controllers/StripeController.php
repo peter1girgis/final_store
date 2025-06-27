@@ -104,20 +104,21 @@ class StripeController extends Controller
         ]);
     }
 
-    // تحديث المخزون أو حذف المنتج لو نفد
+    // تحديث المخزون أو تعطيل المنتج لو نفد
     foreach ($items as $item) {
         $product = $item->product;
         $product->stock -= $item->quantity;
 
         if ($product->stock <= 0) {
-            $productName = $product->name;
-            $product->delete();
+            $product->stock = 0;
+            $product->is_active = false; // ✅ يعطل المنتج بدل ما يحذفه
+            $product->save();
 
             if ($storeOwner) {
                 Notification::create([
                     'user_id' => $storeOwner->id,
                     'title' => 'Product Out of Stock',
-                    'message' => "The product '$productName' is now out of stock and has been removed from your store.",
+                    'message' => "The product '{$product->name}' is now out of stock.",
                     'status' => 'unread',
                     'type' => 'warning',
                 ]);
@@ -140,6 +141,7 @@ class StripeController extends Controller
         'text' => 'Payment done successfully.'
     ]);
 }
+
 
 
 

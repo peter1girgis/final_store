@@ -30,7 +30,7 @@ class ShowProduct extends Component
     }
 
     // تحميل المنتج الحالي باستخدام الـ ID
-    $product = Product::find($this->state['id']);
+    $product = Product::find($this->product->id);
 
     if (!$product) {
         $this->dispatch('return_operation_stopped');
