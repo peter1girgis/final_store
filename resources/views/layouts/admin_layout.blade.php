@@ -28,7 +28,8 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    @include('layouts.partials_admin.aside')
+    {{-- @include('layouts.partials_admin.aside') --}}
+    <livewire:layouts.aside-admin />
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

@@ -107,16 +107,17 @@
                                                 </p>
                                             @endif
 
-                                            <p class="card-text mb-2"><strong  style=" color: rgb(0, 4, 111);">stock : </strong> {{ @$product['stock'] }}</p>
+                                            @php
+                                                $subImages = is_string($product['sub_images']) ? json_decode($product['sub_images'], true) : $product['sub_images'];
+                                            @endphp
 
-                                            {{-- ✅ Sub Images as thumbnails with hover zoom --}}
-                                            @if(@$product['sub_images'])
-                                                <label class="d-block mt-6"><strong  style=" color: rgb(0, 4, 111);">Other Images</strong></label>
+                                            @if (!empty($subImages))
+                                                <label class="d-block mt-6"><strong style="color: rgb(0, 4, 111);">Other Images</strong></label>
 
                                                 <div class="w-100 d-flex overflow-auto border rounded bg-white px-3 py-2" style="gap: 16px;">
-                                                    @foreach(json_decode(@$product['sub_images'], true) as $sub)
+                                                    @foreach($subImages as $sub)
                                                         <div class="flex-shrink-0">
-                                                            <img src="{{ asset('storage/' . @$sub) }}"
+                                                            <img src="{{ asset('storage/' . $sub) }}"
                                                                 class="border rounded shadow-sm"
                                                                 style="height: 220px; object-fit: contain; transition: transform 0.2s;"
                                                                 onmouseover="this.style.transform='scale(1.4)'"
@@ -126,6 +127,7 @@
                                                     @endforeach
                                                 </div>
                                             @endif
+
 
 
 

@@ -73,7 +73,10 @@ class ProductsList extends Component
 		$this->state  = $item->toArray();
         $this->all_categories = categories::select('id', 'name')->get();
         $this->selected_categories = $item->categories->pluck('id')->toArray();
-        $this->state['sub_images'] = json_decode($item->sub_images, true);
+        $this->state['sub_images'] = is_string($item->sub_images)
+            ? json_decode($item->sub_images, true)
+            : $item->sub_images;
+
 
 
 		// $this->showEditModal = false;

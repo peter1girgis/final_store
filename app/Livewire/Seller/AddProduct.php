@@ -80,7 +80,10 @@ class AddProduct extends Component
 		$this->state  = $item->toArray();
 
         $this->selected_categories = $item->categories->pluck('id')->toArray(); // ✅ تحميل التصنيفات المرتبطة
-        $this->state['sub_images'] = json_decode($item->sub_images, true);
+        $this->state['sub_images'] = is_string($item->sub_images)
+    ? json_decode($item->sub_images, true)
+    : $item->sub_images;
+
 
 
 		// $this->showEditModal = false;

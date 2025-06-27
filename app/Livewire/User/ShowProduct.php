@@ -128,7 +128,10 @@ class ShowProduct extends Component
         $this->inWishlist = Wishlist::where('user_id', auth()->id())
             ->where('product_id', $this->product->id)
             ->exists();
-        $this->product->sub_images = json_decode($this->product->sub_images, true);
+        $this->product->sub_images = is_string($this->product->sub_images)
+            ? json_decode($this->product->sub_images, true)
+            : $this->product->sub_images;
+
     }
     public function render()
     {

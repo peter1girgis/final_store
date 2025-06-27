@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Navbar extends Component
@@ -64,7 +65,7 @@ class Navbar extends Component
     }
 }
 
-
+#[Computed()]
     public function render()
     {
         $query = Product::query();
@@ -81,9 +82,11 @@ class Navbar extends Component
             $q->whereIn('categories.id', $this->selectedCategories);
         });
     }
-    $categories = categories::whereHas('products')->get();
+    $categories = categories::whereHas('products')->take(6)->get();
 
-    $this->results = $query->get()->toArray();
+
+    $this->results = $query->take(5)
+                            ->get()->toArray();
 
         return view('livewire.layouts.partials.navbar',['results' => $this->results , 'categories' => $categories])->layout('layouts.admin_layout');
     }

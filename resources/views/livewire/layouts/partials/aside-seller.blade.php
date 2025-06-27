@@ -3,7 +3,7 @@
 
 
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="" class="brand-link">
         <img src="{{ asset('backend/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">ٍStoreLTE 3</span>
@@ -17,7 +17,7 @@
             <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">{{ auth()->user()->name}}</a>
+            <a href="" class="d-block">{{ auth()->user()->name}}</a>
         </div>
         </div>
 
@@ -29,7 +29,7 @@
                 <li class="nav-item">
                     <a href="{{ route('addproduct') }}" class="nav-link {{ request()->is('seller/Add-products') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-plus-square"></i>
-                        <strong>Add Product</strong>
+                        <strong class="brand-text">Add Product</strong>
                     </a>
                 </li>
 
@@ -37,7 +37,7 @@
                 <li class="nav-item">
                     <a href="{{ route('seller.MyStore') }}" class="nav-link {{ request()->is('seller/MyStore') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-store-alt"></i>
-                        <strong>My Store</strong>
+                        <strong class="brand-text">My Store</strong>
                     </a>
                 </li>
 
@@ -45,14 +45,14 @@
                 <li class="nav-item">
                     <a href="{{ route('seller.stores') }}" class="nav-link {{ request()->is('seller/stores') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-store"></i>
-                        <strong>Stores</strong>
+                        <strong class="brand-text">Stores</strong>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('seller.payments') }}" class="nav-link {{ request()->is('seller/payments') ? 'active' : '' }} ">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <strong>Payments</strong>
+                        <i class="nav-icon fas fa-credit-card"></i>
+                        <strong class="brand-text">Payments</strong>
                     </a>
                 </li>
 
@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     <a href="{{ route('profile.edit') }}" class="nav-link">
                         <i class="nav-icon fas fa-user-cog"></i>
-                        <strong>Control Profile</strong>
+                        <strong class="brand-text">Control Profile</strong>
                     </a>
                 </li>
 
