@@ -19,6 +19,7 @@ use App\Livewire\Seller\Payments as SellerPayments;
 use App\Livewire\Seller\Stores as SellerStores;
 use App\Livewire\User\MainCategories;
 use App\Livewire\User\ProductsList;
+use App\Livewire\User\ShowOrders;
 use App\Livewire\User\ShowProduct;
 use App\Livewire\User\ShowStores;
 use App\Models\payments;
@@ -61,6 +62,7 @@ Route::middleware(['auth', 'is_user'])->group(function () {
     Route::get('/product/{id}', ShowProduct::class)->name('product.show');
     Route::get('/user/main_categories', MainCategories::class)->name('user.main_categories');
     Route::get('/user/WishList', WishlistProducts::class)->name('user.wishlist');
+    Route::get('/user/orders', ShowOrders::class)->name('user.orders');
 
     Route::get('user/Shopping_cart', Cart::class)->name('user.cart')->middleware('auth');
     Route::get('/user/main-categories/show/{mainCategoryId}', ShowMainCategories::class)->name('main-category.show');

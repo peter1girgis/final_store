@@ -112,10 +112,22 @@
         })
     });
     </script>
+    <script>
+        
+        window.addEventListener('show_order_modal', event => {
+            $('#orderModal').modal('show');
+        })
+        window.addEventListener('hide_order_modal', event => {
+            $('#orderModal').modal('hide');
+        })
+    </script>
 
     <script>
     window.addEventListener('show_product', event => {
         $('#show_product').modal('show');
+    })
+    window.addEventListener('checkoutModal', event => {
+        $('#checkoutModal').modal('show');
     })
     window.addEventListener('view_product_hide', event => {
         $('#show_product').modal('hide');

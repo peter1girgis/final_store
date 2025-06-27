@@ -10,6 +10,37 @@ use Livewire\Component;
 class Cart extends Component
 {
     public $cartItems = [];
+    public $checkoutData = [
+        'name' => '',
+        'email' => '',
+        'phone' => '',
+        'address' => '',
+    ];
+    public function userInfo (){
+        $this->dispatch('return_operation_stopped');
+        $this->dispatch('checkoutModal');
+
+    }
+    public function confirmCheckout()
+    {
+        $this->validate([
+            'checkoutData.name' => 'required|string|max:255',
+            'checkoutData.email' => 'required|email',
+            'checkoutData.phone' => 'required|string|max:20',
+            'checkoutData.address' => 'required|string|max:500',
+        ]);
+
+        session()->put('order_info', [
+            'user_name' => $this->checkoutData['name'],
+            'user_email' => $this->checkoutData['email'],
+            'user_phone' => $this->checkoutData['phone'],
+            'user_address' => $this->checkoutData['address'],
+        ]);
+
+        $this->payWithStripe(); // نفس الدالة الموجودة عندك
+    }
+
+
     public function payWithStripe()
 {
     $userId = Auth::id();

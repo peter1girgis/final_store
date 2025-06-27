@@ -74,6 +74,15 @@
                         </a>
                     </li>
 
+                    
+                    <li class="nav-item">
+                        <a href="{{ route('user.orders') }}" class="nav-link {{ request()->is('user/orders') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-clipboard-list"></i>
+                            <strong class="brand-text">Orders</strong>
+                        </a>
+                    </li>
+
+
                     {{-- 💵 Payments --}}
                     <li class="nav-item">
                         <a href="{{ route('payments') }}" class="nav-link {{ request()->is('user/payments') ? 'active' : '' }} ">
