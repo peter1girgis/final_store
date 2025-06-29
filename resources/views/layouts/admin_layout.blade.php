@@ -83,6 +83,13 @@
     </script>
 
     <script>
+    window.addEventListener('show_order_modal', event => {
+        $('#orderModal').modal('show');
+    })
+    window.addEventListener('hide_order_modal', event => {
+        $('#orderModal').modal('hide');
+        toastr.success(event.detail.message, 'Success!');
+    })
     window.addEventListener('show-form', event => {
         $('#form').modal('show');
     })

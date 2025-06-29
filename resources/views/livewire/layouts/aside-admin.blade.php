@@ -64,6 +64,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.manageOrders') }}" class="nav-link {{ request()->is('admin/manageOrders') ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <strong class="brand-text">Orders</strong>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.categories') }}" class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-tags"></i>
                         <strong class="brand-text">Categories</strong>

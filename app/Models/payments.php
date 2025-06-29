@@ -30,7 +30,7 @@ class payments extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(stores::class);
     }
 
 
