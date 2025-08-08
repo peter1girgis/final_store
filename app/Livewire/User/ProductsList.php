@@ -107,7 +107,7 @@ class ProductsList extends Component
         $topSellingProducts = collect($productIds)->map(fn($id) => $productsMap[$id])->filter();
 
         $products = Product::latest()->paginate(8);
-        $this->all_categories = categories::select('id', 'name','image')->get();
+        $this->all_categories = categories::latest()->get();
         $this->topRatedProducts = Product::with('store')
             ->withAvg('evaluations', 'rating')
             ->orderByDesc('evaluations_avg_rating')

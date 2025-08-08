@@ -26,7 +26,7 @@ class Cart extends Component
         $this->validate([
             'checkoutData.name' => 'required|string|max:255',
             'checkoutData.email' => 'required|email',
-            'checkoutData.phone' => 'required|string|max:20',
+            'checkoutData.phone' => 'required|min:8|numeric',
             'checkoutData.address' => 'required|string|max:500',
         ]);
 

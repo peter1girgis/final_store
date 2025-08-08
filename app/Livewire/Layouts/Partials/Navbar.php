@@ -82,7 +82,7 @@ class Navbar extends Component
             $q->whereIn('categories.id', $this->selectedCategories);
         });
     }
-    $categories = categories::whereHas('products')->take(6)->get();
+    $categories = categories::whereHas('products')->latest()->get();
 
 
     $this->results = $query->take(5)

@@ -21,8 +21,8 @@
                         {{-- Right: Info --}}
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title mb-1">{{ @$store->store_name }}</h5>
-                                <p class="card-text text-muted mb-1">
+                                <h5 class="card-title mb-1">  store name : {{ @$store->store_name }}</h5>
+                                <p class="card-text text-muted mb-1"> description : 
                                     {{ \Illuminate\Support\Str::limit(@$store->store_description, 80) }}
                                 </p>
                                 <p class="card-text mb-2">

@@ -229,9 +229,9 @@
                             <div class="col">
                                 <label><strong>Stock</strong></label>
                                 <input type="number"
-                                       class="form-control {{ (isset($state['stock']) && $state['stock'] == 0) ? 'text-danger font-weight-bold' : '' }}"
-                                       wire:model.defer="state.stock"
-                                       readonly>
+                                    class="form-control {{ (isset($state['stock']) && $state['stock'] == 0) ? 'text-danger font-weight-bold' : '' }}"
+                                    wire:model.defer="state.stock"
+                                    readonly>
                             </div>
                         </div>
                     </div>

@@ -113,7 +113,7 @@
     });
     </script>
     <script>
-        
+
         window.addEventListener('show_order_modal', event => {
             $('#orderModal').modal('show');
         })

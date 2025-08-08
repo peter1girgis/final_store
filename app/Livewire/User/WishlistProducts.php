@@ -48,7 +48,7 @@ class WishlistProducts extends Component
         $this->dispatch('return_success');
     }
 
-    public function addToCart()
+    public function addToCart($product_id)
 {
     $userId = Auth::id();
 
@@ -58,7 +58,7 @@ class WishlistProducts extends Component
     }
 
     // تحميل المنتج الحالي باستخدام الـ ID
-    $product = Product::find($this->state['id']);
+    $product = Product::findOrFail($product_id);
 
     if (!$product) {
         $this->dispatch('return_operation_stopped');

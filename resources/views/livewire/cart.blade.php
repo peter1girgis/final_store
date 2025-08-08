@@ -51,21 +51,33 @@
                 <label><strong>Full Name</strong></label>
                 <input type="text" class="form-control" wire:model.defer="checkoutData.name">
                 </div>
+                @error('checkoutData.name')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
 
                 <div class="form-group">
                 <label><strong>Email</strong></label>
                 <input type="email" class="form-control" wire:model.defer="checkoutData.email">
                 </div>
+                @error('checkoutData.email')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
 
                 <div class="form-group">
                 <label><strong>Phone Number</strong></label>
                 <input type="text" class="form-control" wire:model.defer="checkoutData.phone">
                 </div>
+                @error('checkoutData.phone')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
 
                 <div class="form-group">
                 <label><strong>Address</strong></label>
                 <textarea class="form-control" rows="2" wire:model.defer="checkoutData.address"></textarea>
                 </div>
+                @error('checkoutData.address')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="modal-footer">

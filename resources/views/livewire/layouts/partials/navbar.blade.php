@@ -56,12 +56,12 @@
                     <label class="mb-2 font-weight-bold">Filter by Category:</label>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach(@$categories as $category)
-                            <input type="checkbox" class="btn-check"
+                            <input type="checkbox" hidden class="btn-check"
                                 id="cat-{{ @$category->id }}"
                                 wire:click="toggleCategory({{ @$category->id }})"
                                 @if(in_array(@$category->id, @$selectedCategories)) checked @endif
                                 autocomplete="off">
-                            <label class="btn btn-outline-primary btn-sm" for="cat-{{ @$category->id }}">
+                            <label class="btn @if(in_array(@$category->id, @$selectedCategories)) btn-primary text-white @endif btn-outline-primary btn-sm" for="cat-{{ @$category->id }}">
                                 {{ @$category->name }}
                             </label>
                         @endforeach
