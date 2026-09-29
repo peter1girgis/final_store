@@ -1,66 +1,251 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Multi-Vendor E-Commerce Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, scalable, and high-performance **Multi-Vendor E-Commerce Platform** designed to connect multiple independent sellers with customers worldwide. Built with a robust backend architecture, real-time analytics, split payment processing, and advanced search functionality.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Architecture Overview](#-architecture-overview)  
+- [Key Features](#-key-features)  
+  - [Customer Portal](#1-customer-portal)  
+  - [Vendor Dashboard](#2-vendor-dashboard)  
+  - [Super Admin Panel](#3-super-admin-panel)  
+- [Tech Stack](#-tech-stack)  
+- [System Architecture](#-system-architecture)  
+- [Getting Started](#-getting-started)  
+  - [Prerequisites](#prerequisites)  
+  - [Installation & Setup](#installation--setup)  
+- [API Reference](#-api-reference)  
+- [Environment Variables](#-environment-variables)  
+- [Contributing](#-contributing)  
+- [License](#-license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🏗 Architecture Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The platform uses a decoupled architecture separating the high-traffic storefront, vendor management portal, and backend API service layer:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Frontend (Storefront & Vendor Portal):** Next.js (React), Tailwind CSS, Redux Toolkit.  
+- **Backend API:** Laravel 10 / Node.js (RESTful & GraphQL endpoints, Sanctum/JWT Auth).  
+- **Database & Caching:** PostgreSQL / MySQL, Redis for caching & queue processing.  
+- **Search & Indexing:** Elasticsearch / Meilisearch for high-speed catalog querying.  
+- **Payments:** Stripe Connect for automated vendor payouts and split payments.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ✨ Key Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1\. Customer Portal
 
-### Premium Partners
+- 🔍 **Advanced Search & Filtering:** Instant searching by category, price, brand, rating, and vendor.  
+- 🛒 **Unified Shopping Cart:** Add products from multiple vendors in a single checkout session.  
+- 💳 **Secure Payment Gateway:** Credit Card, PayPal, and Apple Pay support with automated multi-vendor order splits.  
+- 📦 **Real-time Order Tracking:** Live order state updates via WebSockets.  
+- ⭐️ **Product Reviews & Ratings:** Verified buyer review system with media uploads.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 2\. Vendor Dashboard
 
-## Contributing
+- 📊 **Analytics & Reports:** Revenue tracking, sales graphs, and top-selling products.  
+- 📦 **Inventory & Product Management:** SKU tracking, multi-variant products (size, color, weight), and bulk uploads.  
+- 💰 **Payout Management:** Automated payout scheduling via Stripe Connect.  
+- 🚚 **Order Processing:** Custom shipping rules, order fulfillment, and tracking number assignment.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3\. Super Admin Panel
 
-## Code of Conduct
+- 🛡 **Vendor Verification & Onboarding:** Manual or automated vendor approval workflow.  
+- 💵 **Commission & Fee Management:** Flexible global or per-vendor commission structures.  
+- 📈 **Platform-Wide Metrics:** Comprehensive revenue reports, active seller analytics, and dispute resolution system.  
+- ⚙️ **System Configuration:** Global settings, tax rate management, and multi-currency settings.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠 Tech Stack
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Domain | Technology |
+| :---- | :---- |
+| **Frontend Framework** | Next.js 14 (App Router), React 18 |
+| **Styling & UI** | Tailwind CSS, Shadcn UI |
+| **State Management** | Redux Toolkit, Zustand |
+| **Backend Framework** | Laravel 10 (PHP 8.2) / Node.js Express |
+| **Database** | MySQL 8.0 / PostgreSQL |
+| **Cache & Queue** | Redis |
+| **Search Engine** | Meilisearch / Elasticsearch |
+| **Payments** | Stripe Connect (Custom / Express Accounts) |
+| **Containerization** | Docker, Docker Compose |
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📐 System Architecture
+
+                       \+------------------------+
+
+                       |    Client Browsers     |
+
+                       \+-----------+------------+
+
+                                   |
+
+                                   v
+
+                       \+------------------------+
+
+                       |    Nginx Reverse Proxy  |
+
+                       \+-----------+------------+
+
+                                   |
+
+             \+---------------------+---------------------+
+
+             |                                           |
+
+             v                                           v
+
+\+------------------------+                  \+------------------------+
+
+|  Storefront (Next.js)  |                  | Vendor Admin (Next.js) |
+
+\+------------+-----------+                  \+------------+-----------+
+
+             |                                           |
+
+             \+---------------------+---------------------+
+
+                                   |
+
+                                   v
+
+                       \+------------------------+
+
+                       |    REST / REST API      |
+
+                       |  (Laravel / Node.js)   |
+
+                       \+-----------+------------+
+
+                                   |
+
+         \+-------------------------+-------------------------+
+
+         |                         |                         |
+
+         v                         v                         v
+
+\+------------------+     \+------------------+      \+------------------+
+
+| MySQL / Postgres |     |   Redis Cache    |      | Meilisearch/ES   |
+
+\+------------------+     \+------------------+      \+------------------+
+
+---
+
+## ⚡️ Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed on your machine:
+
+- **Docker** & **Docker Compose**  
+- **Node.js** (v18+) & **npm** / **yarn**  
+- **PHP** (v8.2+) & **Composer**
+
+### Installation & Setup
+
+1. **Clone the Repository**  
+     
+   git clone \<your-repository-url\>  
+     
+   cd multi-vendor-ecommerce  
+     
+2. **Environment Configuration**  
+     
+   cp .env.example .env  
+     
+3. **Start Containers via Docker Compose**  
+     
+   docker-compose up \-d \--build  
+     
+4. **Run Database Migrations & Seeders**  
+     
+   docker-compose exec backend php artisan migrate \--seed  
+     
+5. **Access Application**  
+     
+   - Storefront: `http://localhost:3000`  
+   - Vendor Portal: `http://localhost:3001`  
+   - Admin Panel: `http://localhost:3000/admin`  
+   - API Base URL: `http://localhost:8000/api/v1`
+
+---
+
+## 🔌 API Reference
+
+### Auth Endpoints
+
+| Method | Endpoint | Description | Access |
+| :---- | :---- | :---- | :---- |
+| `POST` | `/api/v1/auth/register` | Register new customer or vendor | Public |
+| `POST` | `/api/v1/auth/login` | Authenticate user & issue token | Public |
+| `POST` | `/api/v1/auth/logout` | Revoke access token | Authenticated |
+
+### Vendor Endpoints
+
+| Method | Endpoint | Description | Access |
+| :---- | :---- | :---- | :---- |
+| `GET` | `/api/v1/vendor/products` | Get list of vendor products | Vendor |
+| `POST` | `/api/v1/vendor/products` | Create a new product | Vendor |
+| `GET` | `/api/v1/vendor/orders` | Fetch orders for vendor's items | Vendor |
+
+---
+
+## 🔐 Environment Variables
+
+Key variables required in `.env`:
+
+APP\_NAME="MultiVendorPlatform"
+
+APP\_ENV=local
+
+APP\_URL=http://localhost:8000
+
+DB\_CONNECTION=mysql
+
+DB\_HOST=127.0.0.1
+
+DB\_PORT=3306
+
+DB\_DATABASE=multivendor\_db
+
+DB\_USERNAME=root
+
+DB\_PASSWORD=secret
+
+REDIS\_HOST=127.0.0.1
+
+REDIS\_PORT=6379
+
+STRIPE\_KEY=pk\_test\_sample\_key
+
+STRIPE\_SECRET=sk\_test\_sample\_secret
+
+STRIPE\_WEBHOOK\_SECRET=whsec\_sample\_secret
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome\! Please follow these steps:
+
+1. Fork the repository.  
+2. Create a new feature branch (`git checkout -b feature/AmazingFeature`).  
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).  
+4. Push to the branch (`git push origin feature/AmazingFeature`).  
+5. Open a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License \- see the LICENSE file for details.
